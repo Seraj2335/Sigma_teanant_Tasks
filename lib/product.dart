@@ -8,14 +8,12 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   bool isChecked = false;
 
-  var bac;
-
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> list = {
       'productName': 'Product Name',
       'id': "657890-9",
-      'model': "Carbon #25"
+      'model': "Carton #25"
     };
     return Row(children: [
       Container(
@@ -68,7 +66,7 @@ class _ProductState extends State<Product> {
                   fontWeight: FontWeight.w500,
                   fontSize: 12,
                   color: Color(0xff595454))),
-          Text('3PCs',
+          Text('3PCS',
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w500,

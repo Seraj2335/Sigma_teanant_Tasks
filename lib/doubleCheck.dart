@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:sigma_task/orderDetails.dart';
 import 'package:sigma_task/dropdownWidget.dart';
+import 'package:sigma_task/secondCheck.dart';
 
 class DoubleCheck extends StatefulWidget {
   @override
@@ -9,6 +12,22 @@ class DoubleCheck extends StatefulWidget {
 }
 
 class _DoubleCheckState extends State<DoubleCheck> {
+  String scanResult = '00000';
+  // Future scanBarCode() async {
+  //   String scanResul;
+  //   try {
+  //     scanResul = await FlutterBarcodeScanner.scanBarcode(
+  //         "#FFFFFF", "Cancel", true, ScanMode.BARCODE);
+  //     print(scanResul);
+  //   } on PlatformException {
+  //     scanResul = "Failed to get result";
+  //   }
+  //   if (mounted) return;
+  //   setState(() {
+  //     this.scanResult = scanResul;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +45,10 @@ class _DoubleCheckState extends State<DoubleCheck> {
             margin: EdgeInsets.only(right: 15, top: 5),
             child: IconButton(
                 iconSize: 30,
-                onPressed: null,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SecondCheck()));
+                },
                 icon: Image.asset('assets/barcode-scanner-1 1.png')),
           )
         ],
@@ -53,7 +75,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                 ),
                 child: Column(
                   children: [
-                    Text('Order No: ' + "205646",
+                    Text('Order No: ' + "205646" + "    ${scanResult}",
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
