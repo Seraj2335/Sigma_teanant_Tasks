@@ -8,58 +8,88 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   bool isChecked = false;
 
+  var bac;
+
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> list = {
       'productName': 'Product Name',
       'id': "657890-9",
-      'model': "Carbon 25"
+      'model': "Carbon #25"
     };
     return Row(children: [
-      Image(
-          width: 50,
-          height: 50,
-          image: NetworkImage(
-              'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg')),
+      Container(
+        width: 50,
+        height: 50,
+        color: Color(0xffF7A51C),
+      ),
       SizedBox(
-        width: 24,
+        width: 19,
       ),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(list['productName']),
+          Text(list['productName'],
+              style: TextStyle(
+                  color: Color(0xff595454),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Montserrat')),
           SizedBox(
-            height: 2,
+            height: 1,
           ),
-          Text(list['id']),
+          Text(list['id'],
+              style: TextStyle(
+                  color: Color(0xff595454),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Montserrat')),
           SizedBox(
-            height: 2,
+            height: 1,
           ),
-          Text(
-            list['model'],
-            style: TextStyle(color: Colors.amber),
-          ),
+          Text(list['model'],
+              style: TextStyle(
+                  color: Color(0xffffaa00),
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Montserrat')),
           SizedBox(
-            height: 2,
+            height: 1,
           )
         ],
       ),
       SizedBox(
-        width: 15,
+        width: 24,
       ),
       Column(
-        children: [Text('Available'), Text('3PCs')],
+        children: [
+          Text('Available',
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12,
+                  color: Color(0xff595454))),
+          Text('3PCs',
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12,
+                  color: Color(0xff595454)))
+        ],
       ),
       SizedBox(
-        width: 15,
+        width: 30,
       ),
-      Checkbox(
-          value: isChecked,
-          onChanged: (newValue) {
-            setState(() {
-              isChecked = newValue!;
-            });
-          })
+      Container(
+        width: 20,
+        height: 20,
+        child: Checkbox(
+            value: isChecked,
+            onChanged: (newValue) {
+              setState(() {
+                isChecked = newValue!;
+              });
+            }),
+      )
     ]);
   }
 }

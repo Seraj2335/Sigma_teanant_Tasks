@@ -13,63 +13,99 @@ class _DoubleCheckState extends State<DoubleCheck> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Double Check',
-          style: TextStyle(color: Colors.white),
-        ),
+        backgroundColor: Color(0xffF7A51C),
         actions: [
           Container(
-              margin: EdgeInsets.only(right: 20),
-              child: IconButton(
-                  onPressed: null,
-                  icon: Icon(
-                    Icons.refresh,
-                    color: Colors.white,
-                  ))),
+            margin: EdgeInsets.only(right: 22),
+            child: IconButton(
+                iconSize: 25,
+                onPressed: null,
+                icon: Image.asset('assets/refresh 1.png')),
+          ),
           Container(
-              margin: EdgeInsets.only(right: 20),
-              child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.qr_code_scanner,
-                    color: Colors.white,
-                  )))
+            margin: EdgeInsets.only(right: 15, top: 5),
+            child: IconButton(
+                iconSize: 30,
+                onPressed: null,
+                icon: Image.asset('assets/barcode-scanner-1 1.png')),
+          )
         ],
+        title: Text(
+          'Double Check',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w300),
+        ),
       ),
       body: Stack(
         children: [
           Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(left: 18, right: 16),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(
-                margin: EdgeInsets.only(top: 15),
-                padding: EdgeInsets.only(left: 100),
+                padding: EdgeInsets.only(
+                  left: 89,
+                  top: 9,
+                ),
                 child: Column(
                   children: [
-                    Text('Order No: '),
+                    Text('Order No: ' + "205646",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Montserrat')),
                     SizedBox(
-                      height: 5,
+                      height: 6,
                     ),
-                    Text('Store Name:'),
+                    Text('Store Name: ' + 'Xyzabc',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Montserrat')),
                     SizedBox(
-                      height: 5,
+                      height: 6,
                     ),
-                    Text('Order Date:'),
+                    Text('Order Date: ' + '22-09-2024',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Montserrat')),
                     SizedBox(
-                      height: 5,
+                      height: 6,
                     ),
-                    Text('Marks:'),
+                    Text('Marks: ' + 'APT',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Montserrat')),
                   ],
                 ),
               ),
+              SizedBox(
+                height: 23,
+              ),
               ListTile(
-                  leading: Text('Order Details:'),
+                  leading: Container(
+                    padding: EdgeInsets.only(top: 3),
+                    child: Text(
+                      'Order Details:',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Montserrat'),
+                    ),
+                  ),
                   trailing: Container(
-                      width: 95,
-                      height: 25,
+                      padding: EdgeInsets.only(left: 11),
+                      width: 106,
+                      height: 29,
                       decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black54),
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                          border: Border.all(width: 0.5, color: Colors.black54),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: DropDownWidget()))
             ]),
           ),
@@ -80,7 +116,14 @@ class _DoubleCheckState extends State<DoubleCheck> {
                   onPressed: () {},
                   child: Row(
                     children: [
-                      Text('Next'),
+                      Text(
+                        'Next',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xffFFA000),
+                            fontFamily: 'Montserrat'),
+                      ),
                       Icon(
                         Icons.arrow_forward,
                       ),

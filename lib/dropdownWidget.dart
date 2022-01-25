@@ -11,9 +11,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
+      underline: Container(),
       icon: Icon(
         Icons.arrow_drop_down,
-        color: Colors.amber,
+        color: Color(0xffFFA000),
       ),
       items: [
         DropdownMenuItem(
@@ -25,7 +26,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           value: 2,
         )
       ],
-      hint: Text('Assignee'),
+      hint: Text(
+        'Assignee',
+        style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xff595454)),
+      ),
       onChanged: (int? value) {
         setState(() {
           _value = value!;
