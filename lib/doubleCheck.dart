@@ -12,22 +12,6 @@ class DoubleCheck extends StatefulWidget {
 }
 
 class _DoubleCheckState extends State<DoubleCheck> {
-  // String scanResult = '00000';
-  // Future scanBarCode() async {
-  //   String scanResul;
-  //   try {
-  //     scanResul = await FlutterBarcodeScanner.scanBarcode(
-  //         "#FFFFFF", "Cancel", true, ScanMode.BARCODE);
-  //     print(scanResul);
-  //   } on PlatformException {
-  //     scanResul = "Failed to get result";
-  //   }
-  //   if (mounted) return;
-  //   setState(() {
-  //     this.scanResult = scanResul;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
