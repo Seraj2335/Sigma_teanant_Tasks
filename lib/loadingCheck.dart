@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sigma_task/dropdownWidget.dart';
 
-class SecondCheck extends StatefulWidget {
-  // final String product;
-  // final String name;
-  // final String orderNumber;
-
-  // SecondCheck({
-  //   required this.name,
-  //   required this.orderNumber,
-  //   required this.product,
-  // });
+class LoadingCheck extends StatefulWidget {
   @override
-  State<SecondCheck> createState() => _SecondCheckState();
+  State<LoadingCheck> createState() => _LoadingCheckState();
 }
 
-class _SecondCheckState extends State<SecondCheck> {
+class _LoadingCheckState extends State<LoadingCheck> {
   bool isChecked = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,6 +17,7 @@ class _SecondCheckState extends State<SecondCheck> {
       child: Stack(
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
                 height: 19,
@@ -123,51 +113,30 @@ class _SecondCheckState extends State<SecondCheck> {
                             fontSize: 14,
                             fontWeight: FontWeight.w500)),
                     SizedBox(
-                      height: 22,
+                      height: 20,
                     ),
-                    Row(
-                      children: [
-                        Text('Carton Number',
-                            style: TextStyle(
-                                color: Color(0xffFFA000),
-                                fontFamily: 'Montserrat',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600)),
-                        SizedBox(
-                          width: 23,
-                        ),
-                        Container(
-                          width: 79,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            border:
-                                Border.all(width: 1, color: Color(0xffFFA000)),
-                          ),
-                          child: Center(
-                            child: Text('234567',
-                                style: TextStyle(
-                                    color: Color(0xffFFA000),
-                                    fontSize: 14,
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w600)),
-                          ),
-                        ),
-                      ],
+                    Container(
+                      child: Text('Carton Number #24',
+                          style: TextStyle(
+                              color: Color(0xffFFA000),
+                              fontFamily: 'Montserrat',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600)),
                     )
                   ],
                 ),
               ),
               SizedBox(
-                height: 26,
+                height: 18,
               ),
               Center(
                 child: Container(
-                  width: 151,
+                  width: 181,
+                  padding: EdgeInsets.only(left: 30),
                   child: Row(
                     children: [
                       Text(
-                        'Second Check',
+                        'Loading Check',
                         style: TextStyle(
                             fontSize: 18,
                             color: Color(0xff1AAC0D),

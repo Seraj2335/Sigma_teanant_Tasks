@@ -12,7 +12,7 @@ class DoubleCheck extends StatefulWidget {
 }
 
 class _DoubleCheckState extends State<DoubleCheck> {
-  String scanResult = '00000';
+  // String scanResult = '00000';
   // Future scanBarCode() async {
   //   String scanResul;
   //   try {
@@ -46,8 +46,11 @@ class _DoubleCheckState extends State<DoubleCheck> {
             child: IconButton(
                 iconSize: 30,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SecondCheck()));
+                  showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                            child: SecondCheck(),
+                          ));
                 },
                 icon: Image.asset('assets/barcode-scanner-1 1.png')),
           )
@@ -75,7 +78,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                 ),
                 child: Column(
                   children: [
-                    Text('Order No: ' + "205646" + "    ${scanResult}",
+                    Text('Order No: ' + "205646",
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,

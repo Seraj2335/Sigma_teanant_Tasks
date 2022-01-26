@@ -12,9 +12,12 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   Widget build(BuildContext context) {
     return DropdownButton(
       underline: Container(),
-      icon: Icon(
-        Icons.arrow_drop_down,
-        color: Color(0xffFFA000),
+      icon: Container(
+        padding: EdgeInsets.only(right: 10),
+        child: Icon(
+          Icons.arrow_drop_down,
+          color: Color(0xffFFA000),
+        ),
       ),
       items: [
         DropdownMenuItem(
@@ -28,7 +31,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
       ],
       hint: Text(
         'Assignee',
-        style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xff595454)),
+        style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Color(0xff595454),
+            fontSize: 14),
       ),
       onChanged: (int? value) {
         setState(() {

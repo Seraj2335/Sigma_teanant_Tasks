@@ -78,8 +78,8 @@ class _ProductState extends State<Product> {
         width: 30,
       ),
       Container(
-        width: 20,
-        height: 20,
+        width: 30,
+        height: 30,
         child: Checkbox(
             value: isChecked,
             onChanged: (newValue) {

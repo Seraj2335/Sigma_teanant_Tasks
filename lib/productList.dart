@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sigma_task/firstCheck.dart';
+import 'package:sigma_task/loadingCheck.dart';
 import 'package:sigma_task/secondCheck.dart';
 
 import 'product.dart';
@@ -14,7 +16,7 @@ class ProductList extends StatelessWidget {
           showDialog(
               context: context,
               builder: (context) => Dialog(
-                    child: SecondCheck(),
+                    child: LoadingCheck(),
                   ));
         },
         child: Container(
