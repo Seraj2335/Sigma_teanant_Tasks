@@ -1,15 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sigma_task/firstCheck.dart';
-import 'package:sigma_task/formDataBaseValue.dart';
+
 import 'package:sigma_task/generateBarCode.dart';
 import 'package:sigma_task/localDB.dart';
-import 'package:sigma_task/localDBModel.dart';
+import 'package:sigma_task/model.dart';
 
 import 'package:sigma_task/orderDetails.dart';
 import 'package:sigma_task/dropdownWidget.dart';
 import 'package:sigma_task/secondCheck.dart';
+import 'package:http/http.dart' as http;
 
 class DoubleCheck extends StatefulWidget {
   final int value;
@@ -20,17 +23,11 @@ class DoubleCheck extends StatefulWidget {
 
 class _DoubleCheckState extends State<DoubleCheck> {
   late Future<dynamic> barCodeString;
-  Future scanBarCode() async {
+  Future<String> scanBarCode() async {
     String scanResult;
     scanResult = await FlutterBarcodeScanner.scanBarcode(
         '#757575', 'Cancel', true, ScanMode.BARCODE);
     return scanResult;
-  }
-
-  @override
-  void initState() {
-    barCodeString = scanBarCode();
-    super.initState();
   }
 
   @override
@@ -51,31 +48,14 @@ class _DoubleCheckState extends State<DoubleCheck> {
             child: IconButton(
                 iconSize: 30,
                 onPressed: () async {
-                  int i = await LocalDataBase.instance
-                      .insert({LocalDataBase.columnName: 'Sigma Teanant'});
-                  print(i);
+                  String value = await scanBarCode();
 
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (context) => Dialog(
-                  //         child: FirstCheck(
-                  //             image: LocalDatabaseFields.id,
-                  //             proDuctName: LocalDatabaseFields.description,
-                  // barCodeString: LocalDatabaseFields.price)));
-
-                  // print(scanBarCode());
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (context) => Dialog(
-                  //           child: FirstCheck(
-                  //               barCodeString: "men's clothing",
-                  //               image:
-                  //                   'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-                  //               proDuctName: "men's clothing"),
-                  //         ));
+                  showDialog(
+                      context: context,
+                      builder: (context) => Dialog(child: FirstCheck()));
                 },
                 icon: Image.asset('assets/barcode-scanner-1 1.png')),
-          )
+          ),
         ],
         title: Text(
           widget.value == 1

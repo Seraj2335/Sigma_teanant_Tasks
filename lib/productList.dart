@@ -47,11 +47,7 @@ class _ProductListState extends State<ProductList> {
                   showDialog(
                       context: context,
                       builder: (context) => Dialog(
-                            child: FirstCheck(
-                              image: snapshot.data!.image,
-                              proDuctName: snapshot.data!.category,
-                              barCodeString: snapshot.data!.category,
-                            ),
+                            child: FirstCheck(),
                           ));
                 },
                 child: Container(

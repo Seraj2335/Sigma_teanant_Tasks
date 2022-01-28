@@ -6,11 +6,11 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
 class LocalDataBase {
-  static final _dbName = "sigmaData.db";
+  static final _dbName = "SigmaData.db";
   static final _dbVersion = 1;
-  static final _tableName = "sigmaTable";
+  static final _tableName = "SigmaTable";
   static final columnId = "_id";
-  static final columnName = "name";
+  static final columnName = {"name"};
   LocalDataBase._privateConstructor();
   static final LocalDataBase instance = LocalDataBase._privateConstructor();
   static Database? _database;
@@ -31,7 +31,7 @@ class LocalDataBase {
 
   Future _onCreate(Database db, int version) {
     return db.execute('''     
-    CREATE TABLE ($_tableName $columnId INTEGER PRIMARY KEY,
+    CREATE TABLE $_tableName ($columnId  INTEGER PRIMARY KEY AUTOINCREMENT,
     $columnName TEXT NOT NULL)
     ''');
   }

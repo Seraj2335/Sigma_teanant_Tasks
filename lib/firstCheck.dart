@@ -1,24 +1,17 @@
+import 'dart:convert';
+
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sigma_task/dropdownWidget.dart';
 import 'package:sigma_task/generateBarCode.dart';
+import 'package:sigma_task/localDB.dart';
+import 'package:sigma_task/model.dart';
 import 'package:sigma_task/piecesdropDown.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:http/http.dart' as http;
 
 class FirstCheck extends StatefulWidget {
-  final String image;
-  final String proDuctName;
-  final String barCodeString;
-  FirstCheck(
-      {required this.image,
-      required this.proDuctName,
-      required this.barCodeString});
-  // Image(
-  //                 width: 102,
-  //                 height: 58,
-  //                 image: AssetImage('assets/image 25.png'),
-  //               ),
-  // FirstCheck({required this.image, required this.proDuctName});
   @override
   State<FirstCheck> createState() => _FirstCheckState();
 }
@@ -27,8 +20,23 @@ class _FirstCheckState extends State<FirstCheck> {
   bool isChecked = false;
 
   int _value = 0;
+
+  void getData() async {
+    final response =
+        await http.get(Uri.parse('https://fakestoreapi.com/products/1'));
+
+    final Map<String, dynamic> dataMap = json.decode(response.body);
+
+    int data = await LocalDataBase.instance.insert(dataMap);
+    print(await LocalDataBase.instance.queryAll());
+  }
+
+  // Future<List<Map>> searchData(Database db, String key) async {
+  //   if(db)
+  // }
   @override
   Widget build(BuildContext context) {
+    getData();
     return Container(
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
@@ -42,11 +50,13 @@ class _FirstCheckState extends State<FirstCheck> {
               SizedBox(
                 height: 19,
               ),
-              Container(
-                margin: EdgeInsets.only(left: 73, right: 77),
-                child: Image(
-                    width: 200, height: 140, image: NetworkImage(widget.image)),
-              ),
+              // Container(
+              //   margin: EdgeInsets.only(left: 73, right: 77),
+              //   child: Image(
+              //       width: 200,
+              //       height: 140,
+              //       image: NetworkImage(snapshot.data!.image)),
+              // ),
               SizedBox(
                 height: 3,
               ),
@@ -55,8 +65,8 @@ class _FirstCheckState extends State<FirstCheck> {
                 margin: EdgeInsets.only(left: 50, right: 50),
                 padding:
                     EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 5),
-                child: BarcodeWidget(
-                    data: widget.barCodeString, barcode: Barcode.code128()),
+                child:
+                    BarcodeWidget(data: '132456', barcode: Barcode.code128()),
               ),
               SizedBox(height: 8),
               Container(
@@ -73,7 +83,7 @@ class _FirstCheckState extends State<FirstCheck> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(widget.proDuctName,
+                              Text('Carton ',
                                   style: TextStyle(
                                       color: Color(0xff595454),
                                       fontFamily: 'Montserrat',
