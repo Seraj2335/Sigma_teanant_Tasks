@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:sigma_task/doubleCheck.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 

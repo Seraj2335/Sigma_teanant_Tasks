@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sigma_task/firstCheck.dart';
+import 'package:sigma_task/formDataBaseValue.dart';
 import 'package:sigma_task/generateBarCode.dart';
+import 'package:sigma_task/localDB.dart';
+import 'package:sigma_task/localDBModel.dart';
 
 import 'package:sigma_task/orderDetails.dart';
 import 'package:sigma_task/dropdownWidget.dart';
@@ -47,22 +50,29 @@ class _DoubleCheckState extends State<DoubleCheck> {
             margin: EdgeInsets.only(right: 15, top: 5),
             child: IconButton(
                 iconSize: 30,
-                onPressed: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => GenerateBarCode()));
+                onPressed: () async {
+                  int i = await LocalDataBase.instance
+                      .insert({LocalDataBase.columnName: 'Sigma Teanant'});
+                  print(i);
+
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (context) => Dialog(
+                  //         child: FirstCheck(
+                  //             image: LocalDatabaseFields.id,
+                  //             proDuctName: LocalDatabaseFields.description,
+                  // barCodeString: LocalDatabaseFields.price)));
 
                   // print(scanBarCode());
-                  showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
-                            child: FirstCheck(
-                                barCodeString: "men's clothing",
-                                image:
-                                    'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-                                proDuctName: "men's clothing"),
-                          ));
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (context) => Dialog(
+                  //           child: FirstCheck(
+                  //               barCodeString: "men's clothing",
+                  //               image:
+                  //                   'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+                  //               proDuctName: "men's clothing"),
+                  //         ));
                 },
                 icon: Image.asset('assets/barcode-scanner-1 1.png')),
           )
