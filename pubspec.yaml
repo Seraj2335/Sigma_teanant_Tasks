@@ -37,6 +37,9 @@ dependencies:
   provider: ^6.0.2
   barcode_widget: ^2.0.2
   flutter_barcode_scanner: ^2.0.0
+  http: ^0.13.4
+  sqflite: ^2.0.2
+ 
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +70,7 @@ flutter:
     - assets/image 7.png
     - assets/X.png
     - assets/image 25.png
+    - assets/Polygon 7.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

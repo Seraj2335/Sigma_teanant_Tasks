@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:sigma_task/firstCheck.dart';
+import 'package:sigma_task/generateBarCode.dart';
 
 import 'package:sigma_task/orderDetails.dart';
 import 'package:sigma_task/dropdownWidget.dart';
 import 'package:sigma_task/secondCheck.dart';
 
 class DoubleCheck extends StatefulWidget {
+  final int value;
+  DoubleCheck({required this.value});
   @override
   State<DoubleCheck> createState() => _DoubleCheckState();
 }
 
 class _DoubleCheckState extends State<DoubleCheck> {
+  late Future<dynamic> barCodeString;
+  Future scanBarCode() async {
+    String scanResult;
+    scanResult = await FlutterBarcodeScanner.scanBarcode(
+        '#757575', 'Cancel', true, ScanMode.BARCODE);
+    return scanResult;
+  }
+
+  @override
+  void initState() {
+    barCodeString = scanBarCode();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,17 +48,31 @@ class _DoubleCheckState extends State<DoubleCheck> {
             child: IconButton(
                 iconSize: 30,
                 onPressed: () {
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => GenerateBarCode()));
+
+                  // print(scanBarCode());
                   showDialog(
                       context: context,
                       builder: (context) => Dialog(
-                            child: SecondCheck(),
+                            child: FirstCheck(
+                                barCodeString: "men's clothing",
+                                image:
+                                    'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+                                proDuctName: "men's clothing"),
                           ));
                 },
                 icon: Image.asset('assets/barcode-scanner-1 1.png')),
           )
         ],
         title: Text(
-          'Double Check',
+          widget.value == 1
+              ? 'Order Details'
+              : widget.value == 2
+                  ? 'Loading Details'
+                  : 'Double Check',
           style: TextStyle(
               color: Colors.white,
               fontSize: 22,
@@ -98,6 +130,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                 height: 23,
               ),
               ListTile(
+                  contentPadding: EdgeInsets.only(left: 0, right: 0),
                   leading: Container(
                     padding: EdgeInsets.only(top: 3),
                     child: Text(
@@ -108,19 +141,33 @@ class _DoubleCheckState extends State<DoubleCheck> {
                           fontFamily: 'Montserrat'),
                     ),
                   ),
-                  trailing: Container(
-                      padding: EdgeInsets.only(left: 11),
-                      width: 106,
-                      height: 29,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 0.5, color: Colors.black54),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: DropDownWidget()))
+                  trailing: widget.value == 2
+                      ? Container(
+                          padding: EdgeInsets.only(left: 11),
+                          width: 106,
+                          height: 29,
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(width: 0.5, color: Colors.black54),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: DropDownWidget())
+                      : Text(
+                          'Assignee: Xyz',
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff595454)),
+                        )),
             ]),
           ),
-          OrderDetails(),
+          OrderDetails(
+            value: widget.value,
+          ),
           Container(
-              margin: EdgeInsets.only(top: 550, left: 270),
+              margin: EdgeInsets.only(
+                  top: 550, left: widget.value == 1 ? 275 : 270),
               child: TextButton(
                   onPressed: () {},
                   child: Row(

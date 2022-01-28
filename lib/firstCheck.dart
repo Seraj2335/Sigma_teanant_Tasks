@@ -1,14 +1,32 @@
+import 'package:barcode_widget/barcode_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sigma_task/dropdownWidget.dart';
+import 'package:sigma_task/generateBarCode.dart';
+import 'package:sigma_task/piecesdropDown.dart';
 
 class FirstCheck extends StatefulWidget {
+  final String image;
+  final String proDuctName;
+  final String barCodeString;
+  FirstCheck(
+      {required this.image,
+      required this.proDuctName,
+      required this.barCodeString});
+  // Image(
+  //                 width: 102,
+  //                 height: 58,
+  //                 image: AssetImage('assets/image 25.png'),
+  //               ),
+  // FirstCheck({required this.image, required this.proDuctName});
   @override
   State<FirstCheck> createState() => _FirstCheckState();
 }
 
 class _FirstCheckState extends State<FirstCheck> {
   bool isChecked = false;
-  int _value = 1;
+
+  int _value = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,20 +45,18 @@ class _FirstCheckState extends State<FirstCheck> {
               Container(
                 margin: EdgeInsets.only(left: 73, right: 77),
                 child: Image(
-                    width: 200,
-                    height: 140,
-                    image: AssetImage('assets/image 7.png')),
+                    width: 200, height: 140, image: NetworkImage(widget.image)),
               ),
               SizedBox(
                 height: 3,
               ),
               Container(
-                margin: EdgeInsets.only(left: 73, right: 77),
-                child: Image(
-                  width: 102,
-                  height: 58,
-                  image: AssetImage('assets/image 25.png'),
-                ),
+                height: 60,
+                margin: EdgeInsets.only(left: 50, right: 50),
+                padding:
+                    EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 5),
+                child: BarcodeWidget(
+                    data: widget.barCodeString, barcode: Barcode.code128()),
               ),
               SizedBox(height: 8),
               Container(
@@ -57,7 +73,7 @@ class _FirstCheckState extends State<FirstCheck> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Product',
+                              Text(widget.proDuctName,
                                   style: TextStyle(
                                       color: Color(0xff595454),
                                       fontFamily: 'Montserrat',
@@ -79,7 +95,7 @@ class _FirstCheckState extends State<FirstCheck> {
                           ),
                         ),
                         SizedBox(
-                          width: 62,
+                          width: 31,
                         ),
                         Container(
                           child: Column(
@@ -146,55 +162,17 @@ class _FirstCheckState extends State<FirstCheck> {
                           width: 33,
                         ),
                         Container(
+                          width: 60,
                           height: 29,
                           decoration: BoxDecoration(
                               border: Border.all(
                                   width: 1, color: Color(0xff595454)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          child: DropdownButton(
-                            underline: Container(),
-                            icon: Container(
-                              margin: EdgeInsets.only(bottom: 15, right: 10),
-                              width: 14,
-                              height: 11,
-                              child: Icon(
-                                Icons.arrow_drop_down,
-                                color: Color(0xffFFA000),
-                              ),
-                            ),
-                            items: [
-                              DropdownMenuItem(value: 1, child: Text('1')),
-                              DropdownMenuItem(value: 2, child: Text('2')),
-                              DropdownMenuItem(value: 3, child: Text('3')),
-                              DropdownMenuItem(value: 4, child: Text('4')),
-                              DropdownMenuItem(value: 5, child: Text('5')),
-                              DropdownMenuItem(value: 6, child: Text('6')),
-                              DropdownMenuItem(value: 7, child: Text('7')),
-                              DropdownMenuItem(value: 8, child: Text('8')),
-                              DropdownMenuItem(value: 9, child: Text('9')),
-                              DropdownMenuItem(value: 10, child: Text('10'))
-                            ],
-                            hint: Container(
-                              margin: EdgeInsets.only(left: 12),
-                              child: Text(
-                                'PCS',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat',
-                                    color: Color(0xff595454)),
-                              ),
-                            ),
-                            onChanged: (int? value) {
-                              setState(() {
-                                _value = value!;
-                              });
-                            },
-                          ),
+                          child: PiecesDropDown(),
                         )
                       ],
-                    ),
+                    )
                   ],
                 ),
               ),
