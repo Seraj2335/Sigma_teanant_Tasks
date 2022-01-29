@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sigma_task/piecesdropDown.dart';
+
 import 'package:sigma_task/model.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,6 +19,7 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   bool isChecked = false;
   int _value = 1;
+  int selectedValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,7 @@ class _ProductState extends State<Product> {
           SizedBox(
             height: 1,
           ),
-          widget.value == 3
+          widget.value == 2
               ? Text('10 PCS/CTN',
                   style: TextStyle(
                       fontSize: 12,
@@ -113,7 +114,42 @@ class _ProductState extends State<Product> {
                         0xff595454,
                       ),
                       width: 1)),
-              child: Center(child: PiecesDropDown()))
+              child: Center(
+                  child: DropdownButton(
+                underline: Container(),
+                icon: Container(
+                    width: 14,
+                    height: 11,
+                    child: Image.asset('assets/Polygon 7.png')),
+                items: [
+                  DropdownMenuItem(value: 1, child: Text('1')),
+                  DropdownMenuItem(value: 2, child: Text('2')),
+                  DropdownMenuItem(value: 3, child: Text('3')),
+                  DropdownMenuItem(value: 4, child: Text('4')),
+                  DropdownMenuItem(value: 5, child: Text('5')),
+                  DropdownMenuItem(value: 6, child: Text('6')),
+                  DropdownMenuItem(value: 7, child: Text('7')),
+                  DropdownMenuItem(value: 8, child: Text('8')),
+                  DropdownMenuItem(value: 9, child: Text('9')),
+                  DropdownMenuItem(value: 10, child: Text('10'))
+                ],
+                hint: Container(
+                  margin: EdgeInsets.only(left: 12),
+                  child: Text(
+                    'PCS',
+                    style: TextStyle(
+                        fontSize: widget.value == 1 ? 12 : 14,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Montserrat',
+                        color: Color(0xff595454)),
+                  ),
+                ),
+                onChanged: (int? value) {
+                  setState(() {
+                    selectedValue = value!;
+                  });
+                },
+              )))
           : SizedBox(
               width: 1,
             ),
@@ -148,7 +184,7 @@ class _ProductState extends State<Product> {
                       border: Border.all(width: 1, color: Color(0xffA4A4A4))),
                   child: Center(
                       child: Text(
-                    _value.toString(),
+                    selectedValue.toString(),
                     style: TextStyle(
                         color: Color(0xff000000),
                         fontSize: 12,

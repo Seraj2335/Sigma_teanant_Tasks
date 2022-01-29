@@ -11,11 +11,12 @@ import 'package:sigma_task/model.dart';
 
 import 'package:sigma_task/orderDetails.dart';
 import 'package:sigma_task/dropdownWidget.dart';
+import 'package:sigma_task/screenValue.dart';
 import 'package:sigma_task/secondCheck.dart';
 import 'package:http/http.dart' as http;
 
 class DoubleCheck extends StatefulWidget {
-  final int value;
+  int value;
   DoubleCheck({required this.value});
   @override
   State<DoubleCheck> createState() => _DoubleCheckState();
@@ -23,6 +24,7 @@ class DoubleCheck extends StatefulWidget {
 
 class _DoubleCheckState extends State<DoubleCheck> {
   late Future<dynamic> barCodeString;
+  ValueIncrement value = new ValueIncrement();
   Future<String> scanBarCode() async {
     String scanResult;
     scanResult = await FlutterBarcodeScanner.scanBarcode(
@@ -52,7 +54,10 @@ class _DoubleCheckState extends State<DoubleCheck> {
 
                   showDialog(
                       context: context,
-                      builder: (context) => Dialog(child: FirstCheck()));
+                      builder: (context) => Dialog(
+                              child: FirstCheck(
+                            value: widget.value,
+                          )));
                 },
                 icon: Image.asset('assets/barcode-scanner-1 1.png')),
           ),
@@ -79,7 +84,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(
                 padding: EdgeInsets.only(
-                  left: 89,
+                  left: MediaQuery.of(context).size.width * 0.25,
                   top: 9,
                 ),
                 child: Column(
@@ -157,9 +162,12 @@ class _DoubleCheckState extends State<DoubleCheck> {
           ),
           Container(
               margin: EdgeInsets.only(
-                  top: 550, left: widget.value == 1 ? 275 : 270),
+                  top: MediaQuery.of(context).size.height - 120,
+                  left: widget.value == 1 ? 275 : 270),
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // value.increment();
+                  },
                   child: Row(
                     children: [
                       Text(

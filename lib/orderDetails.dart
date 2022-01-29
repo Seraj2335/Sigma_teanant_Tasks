@@ -7,10 +7,13 @@ class OrderDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.58,
+        height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(
-            top: 165, left: value == 1 ? 13 : 18, right: value == 1 ? 12 : 16),
+            top: 165,
+            left: value == 1 ? 13 : 18,
+            right: value == 1 ? 12 : 16,
+            bottom: 35),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black38, width: 0.5),
             borderRadius: BorderRadius.all(Radius.circular(5))),

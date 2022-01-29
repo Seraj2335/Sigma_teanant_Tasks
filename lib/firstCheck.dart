@@ -7,11 +7,13 @@ import 'package:sigma_task/dropdownWidget.dart';
 import 'package:sigma_task/generateBarCode.dart';
 import 'package:sigma_task/localDB.dart';
 import 'package:sigma_task/model.dart';
-import 'package:sigma_task/piecesdropDown.dart';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 
 class FirstCheck extends StatefulWidget {
+  final int value;
+  FirstCheck({required this.value});
   @override
   State<FirstCheck> createState() => _FirstCheckState();
 }
@@ -19,24 +21,23 @@ class FirstCheck extends StatefulWidget {
 class _FirstCheckState extends State<FirstCheck> {
   bool isChecked = false;
 
-  int _value = 0;
+  int selectedValue = 0;
 
-  void getData() async {
-    final response =
-        await http.get(Uri.parse('https://fakestoreapi.com/products/1'));
+  // void getData() async {
+  //   final response =
+  //       await http.get(Uri.parse('https://fakestoreapi.com/products/1'));
 
-    final Map<String, dynamic> dataMap = json.decode(response.body);
+  //   final Map<String, dynamic> dataMap = json.decode(response.body);
 
-    int data = await LocalDataBase.instance.insert(dataMap);
-    print(await LocalDataBase.instance.queryAll());
-  }
+  //   int data = await LocalDataBase.instance.insert(dataMap);
+  //   print(await LocalDataBase.instance.queryAll());
+  // }
 
   // Future<List<Map>> searchData(Database db, String key) async {
   //   if(db)
   // }
   @override
   Widget build(BuildContext context) {
-    getData();
     return Container(
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
@@ -159,7 +160,7 @@ class _FirstCheckState extends State<FirstCheck> {
                               borderRadius: BorderRadius.circular(5)),
                           child: Center(
                             child: Text(
-                              _value.toString(),
+                              selectedValue.toString(),
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: Color(0xff595454),
@@ -179,7 +180,41 @@ class _FirstCheckState extends State<FirstCheck> {
                                   width: 1, color: Color(0xff595454)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          child: PiecesDropDown(),
+                          child: DropdownButton(
+                            underline: Container(),
+                            icon: Container(
+                                width: 14,
+                                height: 11,
+                                child: Image.asset('assets/Polygon 7.png')),
+                            items: [
+                              DropdownMenuItem(value: 1, child: Text('1')),
+                              DropdownMenuItem(value: 2, child: Text('2')),
+                              DropdownMenuItem(value: 3, child: Text('3')),
+                              DropdownMenuItem(value: 4, child: Text('4')),
+                              DropdownMenuItem(value: 5, child: Text('5')),
+                              DropdownMenuItem(value: 6, child: Text('6')),
+                              DropdownMenuItem(value: 7, child: Text('7')),
+                              DropdownMenuItem(value: 8, child: Text('8')),
+                              DropdownMenuItem(value: 9, child: Text('9')),
+                              DropdownMenuItem(value: 10, child: Text('10'))
+                            ],
+                            hint: Container(
+                              margin: EdgeInsets.only(left: 12),
+                              child: Text(
+                                'PCS',
+                                style: TextStyle(
+                                    fontSize: widget.value == 1 ? 12 : 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat',
+                                    color: Color(0xff595454)),
+                              ),
+                            ),
+                            onChanged: (int? value) {
+                              setState(() {
+                                selectedValue = value!;
+                              });
+                            },
+                          ),
                         )
                       ],
                     )

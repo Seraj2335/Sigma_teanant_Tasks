@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:sigma_task/doubleCheck.dart';
+import 'package:sigma_task/screenValue.dart';
 
 void main() async {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  ValueIncrement value = new ValueIncrement();
   @override
   Widget build(BuildContext context) {
+    value.changeValue();
+    print(value.value);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sigma Teanant',

@@ -47,12 +47,16 @@ class _ProductListState extends State<ProductList> {
                   showDialog(
                       context: context,
                       builder: (context) => Dialog(
-                            child: FirstCheck(),
+                            child: FirstCheck(
+                              value: widget.value,
+                            ),
                           ));
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: 8),
-                  height: widget.value == 3 ? 93 : 79,
+                  height: widget.value == 2
+                      ? MediaQuery.of(context).size.height * 0.15
+                      : MediaQuery.of(context).size.height * 0.12,
                   child: Column(
                     children: [
                       Product(
