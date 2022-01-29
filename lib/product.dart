@@ -23,6 +23,9 @@ class _ProductState extends State<Product> {
 
   @override
   Widget build(BuildContext context) {
+    double size = MediaQuery.of(context).size.width;
+    double sizeh = MediaQuery.of(context).size.height;
+
     Map<String, dynamic> list = {
       'productName': 'Product Name',
       'id': "657890-9",
@@ -31,19 +34,15 @@ class _ProductState extends State<Product> {
 
     return Row(children: [
       Container(
-        width: 50,
-        height: 50,
+        width: size / 18,
+        height: sizeh / 18,
         // color: Color(0xffF7A51C),
         color: Colors.white,
         child: Image(image: NetworkImage(widget.image)),
       ),
       widget.value == 1
-          ? SizedBox(
-              width: 7,
-            )
-          : SizedBox(
-              width: 13,
-            ),
+          ? SizedBox(width: size / 20)
+          : SizedBox(width: sizeh / 18),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,9 +52,6 @@ class _ProductState extends State<Product> {
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   fontFamily: 'Montserrat')),
-          SizedBox(
-            height: 1,
-          ),
           Text(list['id'],
               style: TextStyle(
                   color: Color(0xff595454),
@@ -76,17 +72,13 @@ class _ProductState extends State<Product> {
                   height: 0,
                 ),
           widget.value == 1
-              ? Container(
-                  width: 35,
-                  height: 15,
-                  child: Text(
-                    '12345',
-                    style: TextStyle(
-                        color: Color(0xff000000),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
-                        fontFamily: 'Montserrat'),
-                  ),
+              ? Text(
+                  '12345',
+                  style: TextStyle(
+                      color: Color(0xff000000),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      fontFamily: 'Montserrat'),
                 )
               : Text(list['model'],
                   style: TextStyle(
@@ -97,10 +89,10 @@ class _ProductState extends State<Product> {
       ),
       widget.value == 1
           ? SizedBox(
-              width: 7,
+              width: size / 20,
             )
           : SizedBox(
-              width: 9,
+              width: size / 18,
             ),
       widget.value == 1
           ? Container(
@@ -155,10 +147,10 @@ class _ProductState extends State<Product> {
             ),
       widget.value == 1
           ? SizedBox(
-              width: 12,
+              width: MediaQuery.of(context).size.width / 20,
             )
           : SizedBox(
-              width: 10,
+              width: MediaQuery.of(context).size.width / 18,
             ),
       //Product Available Section
       Column(
@@ -202,10 +194,10 @@ class _ProductState extends State<Product> {
       ),
       widget.value == 1
           ? SizedBox(
-              width: 16,
+              width: MediaQuery.of(context).size.width / 20,
             )
           : SizedBox(
-              width: 30,
+              width: MediaQuery.of(context).size.width / 18,
             ),
       // Checkbox section
       Container(

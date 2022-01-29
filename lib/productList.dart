@@ -54,9 +54,9 @@ class _ProductListState extends State<ProductList> {
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: 8),
-                  height: widget.value == 2
-                      ? MediaQuery.of(context).size.height * 0.15
-                      : MediaQuery.of(context).size.height * 0.12,
+                  // height: widget.value == 2
+                  //     ? MediaQuery.of(context).size.height * 0.15
+                  //     : MediaQuery.of(context).size.height / 0.12,
                   child: Column(
                     children: [
                       Product(
@@ -75,7 +75,7 @@ class _ProductListState extends State<ProductList> {
                   ),
                 ),
               ),
-              itemCount: 10,
+              itemCount: 20,
             );
           }
           return Center(

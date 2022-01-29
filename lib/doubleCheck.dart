@@ -34,6 +34,8 @@ class _DoubleCheckState extends State<DoubleCheck> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData dataInfo = MediaQuery.of(context);
+    print(dataInfo);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffF7A51C),
@@ -78,7 +80,6 @@ class _DoubleCheckState extends State<DoubleCheck> {
       body: Stack(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(left: 18, right: 16),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -161,28 +162,29 @@ class _DoubleCheckState extends State<DoubleCheck> {
             value: widget.value,
           ),
           Container(
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height - 120,
-                  left: widget.value == 1 ? 275 : 270),
-              child: TextButton(
-                  onPressed: () {
-                    // value.increment();
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                        'Next',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xffFFA000),
-                            fontFamily: 'Montserrat'),
-                      ),
-                      Icon(
-                        Icons.arrow_forward,
-                      ),
-                    ],
-                  )))
+            margin: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width / 1.3,
+                top: MediaQuery.of(context).size.height / 1.0009),
+            child: TextButton(
+                onPressed: () {
+                  // value.increment();
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'Next',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xffFFA000),
+                          fontFamily: 'Montserrat'),
+                    ),
+                    Icon(
+                      Icons.arrow_forward,
+                    ),
+                  ],
+                )),
+          )
         ],
       ),
     );

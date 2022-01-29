@@ -39,10 +39,10 @@ class _FirstCheckState extends State<FirstCheck> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width / 2,
+      height: MediaQuery.of(context).size.height / 2,
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
-      width: 350,
-      height: 440,
       child: Stack(
         children: [
           Column(

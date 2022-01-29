@@ -7,8 +7,6 @@ class OrderDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(
             top: 165,
             left: value == 1 ? 13 : 18,
