@@ -1,21 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sigma_task/firstCheck.dart';
 
-import 'package:sigma_task/generateBarCode.dart';
-import 'package:sigma_task/localDB.dart';
 import 'package:sigma_task/model.dart';
 
 import 'package:sigma_task/orderDetails.dart';
 import 'package:sigma_task/dropdownWidget.dart';
-import 'package:sigma_task/product.dart';
+
 import 'package:sigma_task/screenValue.dart';
-import 'package:sigma_task/secondCheck.dart';
+
 import 'package:http/http.dart' as http;
-import 'package:sigma_task/model.dart';
 
 class DoubleCheck extends StatefulWidget {
   int value;
@@ -54,14 +51,16 @@ class _DoubleCheckState extends State<DoubleCheck> {
         backgroundColor: Color(0xffF7A51C),
         actions: [
           Container(
-            margin: EdgeInsets.only(right: 22),
+            margin: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.05),
             child: IconButton(
                 iconSize: 25,
                 onPressed: null,
                 icon: Image.asset('assets/refresh 1.png')),
           ),
           Container(
-            margin: EdgeInsets.only(right: 15, top: 5),
+            margin: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.05, top: 5),
             child: IconButton(
                 iconSize: 30,
                 onPressed: () async {
@@ -108,7 +107,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: 250,
+                          width: MediaQuery.of(context).size.width * 0.75,
                           padding: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.25,
                             top: 9,
@@ -159,7 +158,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                           ),
                         ),
                         SizedBox(
-                          height: 23,
+                          height: MediaQuery.of(context).size.height * 0.002,
                         ),
                         ListTile(
                             contentPadding: EdgeInsets.only(left: 0, right: 0),

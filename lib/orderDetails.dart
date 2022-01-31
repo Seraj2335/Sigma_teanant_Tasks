@@ -12,7 +12,7 @@ class OrderDetails extends StatelessWidget {
         Container(
             height: MediaQuery.of(context).size.height * 0.72,
             margin: EdgeInsets.only(
-                top: 165,
+                top: MediaQuery.of(context).size.height * 0.20,
                 left: value == 1 ? 13 : 18,
                 right: value == 1 ? 12 : 16,
                 bottom: 10),

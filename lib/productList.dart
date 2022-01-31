@@ -12,7 +12,10 @@ import 'package:sigma_task/model.dart';
 
 class ProductList extends StatefulWidget {
   final int value;
-  ProductList({required this.value});
+
+  ProductList({
+    required this.value,
+  });
 
   @override
   State<ProductList> createState() => _ProductListState();
