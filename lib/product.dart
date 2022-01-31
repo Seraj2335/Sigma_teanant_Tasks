@@ -1,58 +1,97 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
-import 'package:sigma_task/model.dart';
 import 'package:http/http.dart' as http;
 
-class Product extends StatefulWidget {
-  final String image;
-  final String proDuctName;
-
+class ProductData extends StatefulWidget {
   final int value;
-  Product(
-      {required this.value, required this.image, required this.proDuctName});
+  bool isChecked;
+  bool firstCheck;
+  bool loadCheck;
+  bool doubleCheck;
+  int quantityAvailable;
+  String unitAvailable;
+  String itemRef;
+  String itemName;
+  String imagePath;
+  int quantityRequired;
+  String unitRequired;
+  String unit;
+  String orderId;
+  String productId;
+  ProductData(
+      {required this.productId,
+      required this.orderId,
+      required this.unit,
+      required this.doubleCheck,
+      required this.value,
+      required this.firstCheck,
+      required this.imagePath,
+      required this.isChecked,
+      required this.itemName,
+      required this.itemRef,
+      required this.loadCheck,
+      required this.quantityAvailable,
+      required this.quantityRequired,
+      required this.unitAvailable,
+      required this.unitRequired});
   @override
-  State<Product> createState() => _ProductState();
+  State<ProductData> createState() => _ProductDataState();
 }
 
-class _ProductState extends State<Product> {
-  bool isChecked = false;
-  int _value = 1;
+class _ProductDataState extends State<ProductData> {
+  // late bool isChecked;
+
   int selectedValue = 0;
+  Future<void> updateProductDetails(bool newValue) async {
+    final url = 'https://stl-api-staging.herokuapp.com/mock/warehouse/check/1';
+    final data = {
+      "check": widget.isChecked,
+      "productId": widget.productId,
+      "orderId": widget.orderId,
+      "userId": "5fcb6fd3a7000000171173c2"
+    };
+    final response = await http.patch(Uri.parse(url),
+        body: jsonEncode(data),
+        headers: <String, String>{
+          'Content-type': 'application/json'
+        }).then((res) {
+      setState(() {
+        widget.isChecked = newValue;
+      });
+    });
+    // print(response.body);
+  }
 
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
     double sizeh = MediaQuery.of(context).size.height;
-
-    Map<String, dynamic> list = {
-      'productName': 'Product Name',
-      'id': "657890-9",
-      'model': "Carton #25"
-    };
-
     return Row(children: [
-      Container(
-        width: size / 18,
-        height: sizeh / 18,
-        // color: Color(0xffF7A51C),
-        color: Colors.white,
-        child: Image(image: NetworkImage(widget.image)),
-      ),
+      // Container(
+      //   width: size / 18,
+      //   height: sizeh / 18,
+      //   // color: Color(0xffF7A51C),
+      //   color: Colors.white,
+      //   child: Image(image: NetworkImage()),
+      // ),
       widget.value == 1
           ? SizedBox(width: size / 20)
           : SizedBox(width: sizeh / 18),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.proDuctName,
-              style: TextStyle(
-                  color: Color(0xff595454),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Montserrat')),
-          Text(list['id'],
+          Container(
+            width: 98,
+            child: Text(widget.itemName,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: Color(0xff595454),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Montserrat')),
+          ),
+          Text(widget.itemRef,
               style: TextStyle(
                   color: Color(0xff595454),
                   fontSize: 14,
@@ -80,7 +119,7 @@ class _ProductState extends State<Product> {
                       fontWeight: FontWeight.w300,
                       fontFamily: 'Montserrat'),
                 )
-              : Text(list['model'],
+              : Text('',
                   style: TextStyle(
                       color: Color(0xffffaa00),
                       fontWeight: FontWeight.w500,
@@ -97,7 +136,6 @@ class _ProductState extends State<Product> {
       widget.value == 1
           ? Container(
               margin: EdgeInsets.only(top: 10),
-              width: 56,
               height: 28,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -106,8 +144,7 @@ class _ProductState extends State<Product> {
                         0xff595454,
                       ),
                       width: 1)),
-              child: Center(
-                  child: DropdownButton(
+              child: DropdownButton(
                 underline: Container(),
                 icon: Container(
                     width: 14,
@@ -123,12 +160,12 @@ class _ProductState extends State<Product> {
                   DropdownMenuItem(value: 7, child: Text('7')),
                   DropdownMenuItem(value: 8, child: Text('8')),
                   DropdownMenuItem(value: 9, child: Text('9')),
-                  DropdownMenuItem(value: 10, child: Text('10'))
+                  DropdownMenuItem(value: 10, child: Text('10')),
                 ],
                 hint: Container(
                   margin: EdgeInsets.only(left: 12),
                   child: Text(
-                    'PCS',
+                    widget.unitAvailable,
                     style: TextStyle(
                         fontSize: widget.value == 1 ? 12 : 14,
                         fontWeight: FontWeight.w600,
@@ -141,7 +178,7 @@ class _ProductState extends State<Product> {
                     selectedValue = value!;
                   });
                 },
-              )))
+              ))
           : SizedBox(
               width: 1,
             ),
@@ -176,7 +213,7 @@ class _ProductState extends State<Product> {
                       border: Border.all(width: 1, color: Color(0xffA4A4A4))),
                   child: Center(
                       child: Text(
-                    selectedValue.toString(),
+                    widget.quantityAvailable.toString(),
                     style: TextStyle(
                         color: Color(0xff000000),
                         fontSize: 12,
@@ -207,11 +244,13 @@ class _ProductState extends State<Product> {
         width: widget.value == 1 ? 20 : 30,
         height: widget.value == 1 ? 20 : 30,
         child: Checkbox(
-            value: isChecked,
+            value: widget.isChecked,
             onChanged: (newValue) {
-              setState(() {
-                isChecked = newValue!;
-              });
+              // setState(() {
+              //   isChecked = !newValue!;
+
+              // });
+              updateProductDetails(newValue!);
             }),
       )
     ]);

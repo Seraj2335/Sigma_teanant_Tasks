@@ -13,7 +13,15 @@ import 'package:http/http.dart' as http;
 
 class FirstCheck extends StatefulWidget {
   final int value;
-  FirstCheck({required this.value});
+  String barCodeValue;
+  // String unit;
+  // String itemName;
+  // String itemRef;
+  // String imagePath;
+  FirstCheck({
+    required this.barCodeValue,
+    required this.value,
+  });
   @override
   State<FirstCheck> createState() => _FirstCheckState();
 }
@@ -56,7 +64,7 @@ class _FirstCheckState extends State<FirstCheck> {
               //   child: Image(
               //       width: 200,
               //       height: 140,
-              //       image: NetworkImage(snapshot.data!.image)),
+              //       image: NetworkImage(widget.imagePath)),
               // ),
               SizedBox(
                 height: 3,
@@ -66,8 +74,8 @@ class _FirstCheckState extends State<FirstCheck> {
                 margin: EdgeInsets.only(left: 50, right: 50),
                 padding:
                     EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 5),
-                child:
-                    BarcodeWidget(data: '132456', barcode: Barcode.code128()),
+                child: BarcodeWidget(
+                    data: widget.barCodeValue, barcode: Barcode.code128()),
               ),
               SizedBox(height: 8),
               Container(
@@ -84,24 +92,30 @@ class _FirstCheckState extends State<FirstCheck> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Carton ',
+                              Text('Carton',
                                   style: TextStyle(
                                       color: Color(0xff595454),
                                       fontFamily: 'Montserrat',
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500)),
-                              Text('Name',
-                                  style: TextStyle(
-                                      color: Color(0xff595454),
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500)),
-                              Text('2345678-678',
-                                  style: TextStyle(
-                                      color: Color(0xff595454),
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500)),
+                              Container(
+                                width: 100,
+                                child: Text('Number',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        color: Color(0xff595454),
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                              Container(
+                                  child: Text('22-34547',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          color: Color(0xff595454),
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500))),
                             ],
                           ),
                         ),
@@ -160,7 +174,7 @@ class _FirstCheckState extends State<FirstCheck> {
                               borderRadius: BorderRadius.circular(5)),
                           child: Center(
                             child: Text(
-                              selectedValue.toString(),
+                              '5',
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: Color(0xff595454),
