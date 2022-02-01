@@ -12,10 +12,9 @@ import 'package:sigma_task/model.dart';
 
 class ProductList extends StatefulWidget {
   final int value;
+  Function getArrayValue;
 
-  ProductList({
-    required this.value,
-  });
+  ProductList({required this.value, required this.getArrayValue});
 
   @override
   State<ProductList> createState() => _ProductListState();
@@ -37,6 +36,10 @@ class _ProductListState extends State<ProductList> {
   void initState() {
     proDuctData = getProductData();
     super.initState();
+  }
+
+  void upDateArray(Map data) {
+    widget.getArrayValue(data);
   }
 
   @override
@@ -67,6 +70,7 @@ class _ProductListState extends State<ProductList> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             ProductData(
+                                upDateArray: upDateArray,
                                 productId: snapshot.data!.tempOrder
                                     .productDetails[index].product.id,
                                 orderId: snapshot.data!.tempOrder.id,

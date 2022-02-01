@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sigma_task/detailsArray.dart';
 
 class ProductData extends StatefulWidget {
+  Function upDateArray;
   final int value;
   bool isChecked;
   bool firstCheck;
@@ -20,7 +22,8 @@ class ProductData extends StatefulWidget {
   String orderId;
   String productId;
   ProductData(
-      {required this.productId,
+      {required this.upDateArray,
+      required this.productId,
       required this.orderId,
       required this.unit,
       required this.doubleCheck,
@@ -40,9 +43,8 @@ class ProductData extends StatefulWidget {
 }
 
 class _ProductDataState extends State<ProductData> {
-  // late bool isChecked;
-
   int selectedValue = 0;
+  bool csChecked = true;
   Future<void> updateProductDetails(bool newValue) async {
     final url = 'https://stl-api-staging.herokuapp.com/mock/warehouse/check/1';
     final data = {
@@ -58,9 +60,9 @@ class _ProductDataState extends State<ProductData> {
         }).then((res) {
       setState(() {
         widget.isChecked = newValue;
+        csChecked = !csChecked;
       });
     });
-    // print(response.body);
   }
 
   @override
@@ -221,7 +223,7 @@ class _ProductDataState extends State<ProductData> {
                         fontFamily: 'Montserrat'),
                   )),
                 )
-              : Text('3PCS',
+              : Text("PCS",
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
@@ -238,21 +240,44 @@ class _ProductDataState extends State<ProductData> {
             ),
       // Checkbox section
       Container(
-        margin: EdgeInsets.only(
-          top: widget.value == 1 ? 20 : 0,
-        ),
-        width: widget.value == 1 ? 20 : 30,
-        height: widget.value == 1 ? 20 : 30,
-        child: Checkbox(
-            value: widget.isChecked,
-            onChanged: (newValue) {
-              // setState(() {
-              //   isChecked = !newValue!;
+          margin: EdgeInsets.only(
+            top: widget.value == 1 ? 20 : 0,
+          ),
+          width: widget.value == 1 ? 20 : 30,
+          height: widget.value == 1 ? 20 : 30,
+          child: csChecked == false
+              ? CircularProgressIndicator()
+              : Checkbox(
+                  value: widget.isChecked,
+                  onChanged: (newValue) async {
+                    setState(() {
+                      csChecked = !csChecked;
+                    });
 
-              // });
-              updateProductDetails(newValue!);
-            }),
-      )
+                    updateProductDetails(newValue!);
+
+                    if (newValue == true) {
+                      final data = {
+                        "orderId": widget.orderId,
+                        "userId": "5fcb6fd3a7000000171173c2",
+                        "productDetails": [
+                          {
+                            "productId": widget.productId,
+                            "quantityAv": widget.quantityAvailable,
+                            "firstCheck": widget.isChecked,
+                            "unitAv": widget.unitAvailable
+                          }
+                        ]
+                      };
+                      final response = await http.put(
+                        Uri.parse(
+                            'https://stl-api-staging.herokuapp.com/mock/warehouse/save'),
+                        body: jsonEncode(data),
+                      );
+                      print(response.statusCode);
+                      print(response.body);
+                    }
+                  }))
     ]);
   }
 }

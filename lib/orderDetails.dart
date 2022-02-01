@@ -3,7 +3,12 @@ import 'package:sigma_task/productList.dart';
 
 class OrderDetails extends StatelessWidget {
   final int value;
-  OrderDetails({required this.value});
+  Function getTheList;
+  OrderDetails({required this.value, required this.getTheList});
+  void getArrayValue(Map data) {
+    getTheList(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,6 +25,7 @@ class OrderDetails extends StatelessWidget {
                 border: Border.all(color: Colors.black38, width: 0.5),
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: ProductList(
+              getArrayValue: getArrayValue,
               value: value,
             )),
         Container(
