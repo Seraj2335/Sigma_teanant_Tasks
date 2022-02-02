@@ -13,15 +13,24 @@ void main() async {
   // global.BASE_URL;
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-  final ValueIncrement value = new ValueIncrement();
+class _MyAppState extends State<MyApp> {
+  int changedData = 1;
+
+  void upDatedValue(int data) {
+    setState(() {
+      data = 2;
+    });
+
+    changedData = data;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // value.changeValue();
-    // print(value.value);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sigma Teanant',
@@ -37,7 +46,8 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.amber),
       home: DoubleCheck(
-        value: 1,
+        updatedValue: upDatedValue,
+        value: changedData,
       ),
     );
   }

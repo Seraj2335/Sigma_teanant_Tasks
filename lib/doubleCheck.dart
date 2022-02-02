@@ -9,22 +9,20 @@ import 'package:sigma_task/firstCheck.dart';
 import 'package:sigma_task/model.dart';
 
 import 'package:sigma_task/orderDetails.dart';
-import 'package:sigma_task/dropdownWidget.dart';
-
-import 'package:sigma_task/screenValue.dart';
 
 import 'package:http/http.dart' as http;
 
 class DoubleCheck extends StatefulWidget {
   int value;
-  DoubleCheck({required this.value});
+  final Function updatedValue;
+  DoubleCheck({required this.value, required this.updatedValue});
   @override
   State<DoubleCheck> createState() => _DoubleCheckState();
 }
 
 class _DoubleCheckState extends State<DoubleCheck> {
   late Future<dynamic> barCodeString;
-  ValueIncrement value = new ValueIncrement();
+  // ValueIncrement value = new ValueIncrement();
   Future<String> scanBarCode() async {
     return await FlutterBarcodeScanner.scanBarcode(
         '#dc7c71', 'Cancel', true, ScanMode.BARCODE);
@@ -32,7 +30,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
 
   Future<Welcome> getStoreDetails() async {
     String url =
-        'https://stl-api-staging.herokuapp.com/mock/warehouse/product/pending?orderId=61f3b7b2d17b1cd797c19de8&userId=5fcb6fd3a7000000171173c2&checkNo=1';
+        'https://stl-api-staging.herokuapp.com/mock/warehouse/product/pending?orderId=61f3b7b2d17b1cd797c19de8&userId=5fcb6fd3a7000000171173c2&checkNo=${widget.value}';
     final response = await http.get(Uri.parse(url));
     final jsonData = jsonDecode(response.body);
     return Welcome.fromJson(jsonData);
@@ -52,6 +50,10 @@ class _DoubleCheckState extends State<DoubleCheck> {
   List listData = [];
   void getTheFinalList(Map data) {
     listData.add(data);
+  }
+
+  void changeCheckValue(int data) {
+    widget.updatedValue(data);
   }
 
   @override
@@ -110,12 +112,16 @@ class _DoubleCheckState extends State<DoubleCheck> {
                             'https://stl-api-staging.herokuapp.com/mock/warehouse/save';
                         for (var i in listData) {
                           final response = await http.put(Uri.parse(url),
-                              body: jsonEncode(i),
+                              body: jsonEncode(
+                                {
+                                  "order": snapshot.data!.tempOrder.id,
+                                  "userId": "5fcb6fd3a7000000171",
+                                  "productDetails": [i]
+                                },
+                              ),
                               headers: <String, String>{
                                 'Content-type': 'application/json'
                               });
-                          print(response.body);
-                          print(response.statusCode);
                         }
                       },
                       child: Text(
@@ -129,7 +135,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
               title: Text(
                 widget.value == 1
                     ? 'Order Details'
-                    : widget.value == 2
+                    : widget.value == 3
                         ? 'Loading Details'
                         : 'Double Check',
                 style: TextStyle(
@@ -246,6 +252,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                       );
                     }),
                 OrderDetails(
+                  changeCheckValue: changeCheckValue,
                   value: widget.value,
                   getTheList: getTheFinalList,
                 ),

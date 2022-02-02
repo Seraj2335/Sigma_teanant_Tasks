@@ -7,7 +7,11 @@ import 'package:http/http.dart' as http;
 class OrderDetails extends StatefulWidget {
   final int value;
   Function getTheList;
-  OrderDetails({required this.value, required this.getTheList});
+  Function changeCheckValue;
+  OrderDetails(
+      {required this.value,
+      required this.getTheList,
+      required this.changeCheckValue});
 
   @override
   State<OrderDetails> createState() => _OrderDetailsState();
@@ -48,21 +52,32 @@ class _OrderDetailsState extends State<OrderDetails> {
               style: ElevatedButton.styleFrom(
                   primary: Color(0xffFBA919),
                   padding: EdgeInsets.only(top: 12, bottom: 12)),
-              onPressed: () {
+              onPressed: () async {
                 setState(() {
                   confirmed = !confirmed;
                 });
-                for (var i in confirmDataList) {
-                  final response = http.put(
+                // print(confirmDataList);
+                try {
+                  var response = await http.put(
                       Uri.parse(
                           'https://stl-api-staging.herokuapp.com/mock/warehouse/confirm/1'),
-                      body: jsonEncode(i),
+                      body: jsonEncode({
+                        "orderId": "61f3b7b2d17b1cd797c19de8",
+                        "userId": "5fcb6fd3a7000000171173c2",
+                        "productDetails": confirmDataList
+                      }),
                       headers: <String, String>{
                         'Content-type': 'application/json'
-                      }).then((value) => print(value.statusCode));
+                      });
+
                   setState(() {
                     confirmed = true;
                   });
+                  if (response.statusCode == 200) {
+                    widget.changeCheckValue(widget.value);
+                  }
+                } catch (e) {
+                  print(e.toString());
                 }
               },
               child: confirmed == false

@@ -6,6 +6,7 @@ import 'package:sigma_task/dropdownWidget.dart';
 import 'package:http/http.dart' as http;
 
 class ProductData extends StatefulWidget {
+  List<dynamic> cartonId;
   Function upDateArray;
   final int value;
   bool isChecked;
@@ -23,7 +24,8 @@ class ProductData extends StatefulWidget {
   String orderId;
   String productId;
   ProductData(
-      {required this.upDateArray,
+      {required this.cartonId,
+      required this.upDateArray,
       required this.productId,
       required this.orderId,
       required this.unit,
@@ -61,21 +63,22 @@ class _ProductDataState extends State<ProductData>
   Future<void> updateProductDetails(bool newValue) async {
     final url = 'https://stl-api-staging.herokuapp.com/mock/warehouse/check/1';
     final data = {
-      "check": widget.isChecked,
+      "check": newValue,
       "productId": widget.productId,
       "orderId": widget.orderId,
       "userId": "5fcb6fd3a7000000171173c2"
     };
+
     final response = await http.patch(Uri.parse(url),
         body: jsonEncode(data),
-        headers: <String, String>{
-          'Content-type': 'application/json'
-        }).then((res) {
-      setState(() {
-        widget.isChecked = newValue;
-        csChecked = !csChecked;
-      });
+        headers: <String, String>{'Content-type': 'application/json'});
+    setState(() {
+      widget.firstCheck = newValue;
+      csChecked = !csChecked;
     });
+    // print(response.statusCode);
+    // print(response.body);
+    // print(response.statusCode);
   }
 
   void checkBoxCallBack(bool value) {
@@ -120,7 +123,7 @@ class _ProductDataState extends State<ProductData>
           SizedBox(
             height: 1,
           ),
-          widget.value == 2
+          widget.value == 3
               ? Text('10 PCS/CTN',
                   style: TextStyle(
                       fontSize: 12,
@@ -132,14 +135,14 @@ class _ProductDataState extends State<ProductData>
                 ),
           widget.value == 1
               ? Text(
-                  '12345',
+                  widget.cartonId.toString(),
                   style: TextStyle(
                       color: Color(0xff000000),
                       fontSize: 12,
                       fontWeight: FontWeight.w300,
                       fontFamily: 'Montserrat'),
                 )
-              : Text('',
+              : Text(widget.cartonId.toString(),
                   style: TextStyle(
                       color: Color(0xffffaa00),
                       fontWeight: FontWeight.w500,
@@ -155,6 +158,7 @@ class _ProductDataState extends State<ProductData>
             ),
       widget.value == 1
           ? Container(
+              width: MediaQuery.of(context).size.width * 0.24,
               margin: EdgeInsets.only(top: 10),
               height: 28,
               decoration: BoxDecoration(
@@ -164,10 +168,11 @@ class _ProductDataState extends State<ProductData>
                         0xff595454,
                       ),
                       width: 1)),
-              child: DropDownWidget(
-                  dropDownCallBack: dropDownCallBackFunction,
-                  unitAvailable: widget.unitAvailable,
-                  value: widget.value))
+              child: Center(
+                  child: DropDownWidget(
+                      dropDownCallBack: dropDownCallBackFunction,
+                      unitAvailable: widget.unitAvailable,
+                      value: widget.value)))
           : SizedBox(
               width: 1,
             ),
@@ -210,7 +215,7 @@ class _ProductDataState extends State<ProductData>
                         fontFamily: 'Montserrat'),
                   )),
                 )
-              : Text("PCS",
+              : Text(widget.unitAvailable,
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
@@ -235,28 +240,22 @@ class _ProductDataState extends State<ProductData>
           child: csChecked == false
               ? CircularProgressIndicator()
               : Checkbox(
-                  value: widget.isChecked,
+                  value: widget.firstCheck,
                   onChanged: (newValue) async {
                     setState(() {
                       csChecked = !csChecked;
                     });
 
-                    updateProductDetails(newValue!);
-
-                    if (newValue == true) {
-                      widget.upDateArray({
-                        "orderId": widget.orderId,
-                        "userId": "5fcb6fd3a7000000171173c2",
-                        "productDetails": [
-                          {
-                            "productId": widget.productId,
-                            "quantityAv": widget.quantityAvailable,
-                            "firstCheck": widget.isChecked,
-                            "unitAv": widget.unitAvailable
-                          }
-                        ]
-                      });
-                    }
+                    await updateProductDetails(newValue!);
+                    if (newValue == true)
+                      widget.upDateArray(
+                        {
+                          "productId": widget.productId,
+                          "quantityAv": widget.quantityAvailable,
+                          "firstCheck": widget.firstCheck,
+                          "unitAv": widget.unitAvailable
+                        },
+                      );
                   }))
     ]);
   }
