@@ -31,11 +31,8 @@ class _ProductListState extends State<ProductList> {
       'checkNo': widget.value.toString(),
     };
     try{
-      var headers = {
-        HttpHeaders.contentTypeHeader: 'application/json',
-      };
       final uri = Uri.https(global.BASE_URL, '/mock/warehouse/product/pending', queryParams);
-      final response = await http.get(uri, headers: headers);
+      final response = await http.get(uri, headers: global.HEADERS);
       var jsonData = jsonDecode(response.body);
       return Welcome.fromJson(jsonData);
     } catch(e) {

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'global.dart' as global;
+
 // import 'package:sigma_task/dropdownWidget.dart';
 import 'package:sigma_task/firstCheck.dart';
 import 'package:sigma_task/model.dart';
@@ -10,13 +12,16 @@ import 'package:http/http.dart' as http;
 class DoubleCheck extends StatefulWidget {
   int value;
   final Function updatedValue;
+
   DoubleCheck({required this.value, required this.updatedValue});
+
   @override
   State<DoubleCheck> createState() => _DoubleCheckState();
 }
 
 class _DoubleCheckState extends State<DoubleCheck> {
   late Future<dynamic> barCodeString;
+
   // ValueIncrement value = new ValueIncrement();
   Future<String> scanBarCode() async {
     return await FlutterBarcodeScanner.scanBarcode(
@@ -24,16 +29,25 @@ class _DoubleCheckState extends State<DoubleCheck> {
   }
 
   Future<Welcome> getStoreDetails() async {
-    String url =
-        'https://stl-api-staging.herokuapp.com/mock/warehouse/product/pending?orderId=61f3b7b2d17b1cd797c19de8&userId=5fcb6fd3a7000000171173c2&checkNo=${widget.value}';
-    final response = await http.get(Uri.parse(url));
-    final jsonData = jsonDecode(response.body);
-    return Welcome.fromJson(jsonData);
+    try {
+      Map<String, String> queryParams = {
+        'orderId': global.orderId,
+        'userId': global.userId,
+        'checkNo': widget.value.toString(),
+      };
+      final uri = Uri.https(global.BASE_URL, '/mock/warehouse/product/pending', queryParams);
+      final response = await http.get(uri, headers: global.HEADERS);
+      var jsonData = jsonDecode(response.body);
+      return Welcome.fromJson(jsonData);
+    }catch(e){
+      return Welcome.fromJson({});
+    }
   }
 
   Future<void> saveData() async {}
 
   late Future<Welcome> data;
+
   @override
   void initState() {
     data = getStoreDetails();
@@ -43,6 +57,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
   // DetailsArray detaArra = new DetailsArray();
 
   List listData = [];
+
   void getTheFinalList(Map data) {
     listData.add(data);
   }
@@ -52,6 +67,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
   }
 
   int? selectedValue;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Welcome>(
@@ -137,7 +153,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                         : 'Double Check',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22,
+                    fontSize: 20,
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w300),
               ),
@@ -159,7 +175,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                 width: MediaQuery.of(context).size.width * 0.85,
                                 padding: EdgeInsets.only(
                                   left:
-                                      MediaQuery.of(context).size.width * 0.25,
+                                      MediaQuery.of(context).size.width * 0.15,
                                   top: 9,
                                 ),
                                 child: Column(

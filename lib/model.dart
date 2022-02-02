@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
 
@@ -62,10 +63,11 @@ class TempOrder {
   int discount;
   int totalQuantity;
   double totalCost;
-  DateTime date;
+  String date;
   DateTime createdAt;
   DateTime updatedAt;
   int v;
+
 
   factory TempOrder.fromJson(Map<String, dynamic> json) => TempOrder(
         id: json["_id"],
@@ -78,7 +80,7 @@ class TempOrder {
         tempOrderInvoiceNo: json["tempOrderInvoiceNo"],
         invoiceType: json["invoiceType"],
         sales: json["sales"],
-        store: json["store"],
+        store: json["store"]["storeName"],
         productDetails: List<ProductDetail>.from(
             json["productDetails"].map((x) => ProductDetail.fromJson(x))),
         categoryList: List<CategoryList>.from(
@@ -87,7 +89,7 @@ class TempOrder {
         discount: json["discount"],
         totalQuantity: json["totalQuantity"],
         totalCost: json["totalCost"].toDouble(),
-        date: DateTime.parse(json["date"]),
+        date: DateFormat.yMMMEd().format(DateTime.parse(json["date"])),
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
@@ -112,7 +114,7 @@ class TempOrder {
         "discount": discount,
         "totalQuantity": totalQuantity,
         "totalCost": totalCost,
-        "date": date.toIso8601String(),
+        "date": date,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
