@@ -110,10 +110,12 @@ class _DoubleCheckState extends State<DoubleCheck> {
                             'https://stl-api-staging.herokuapp.com/mock/warehouse/save';
                         for (var i in listData) {
                           final response = await http.put(Uri.parse(url),
-                              body: jsonDecode(i.toString()),
+                              body: jsonEncode(i),
                               headers: <String, String>{
                                 'Content-type': 'application/json'
                               });
+                          print(response.body);
+                          print(response.statusCode);
                         }
                       },
                       child: Text(
@@ -231,7 +233,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                                   color: Colors.black54),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10))),
-                                          child: DropDownWidget())
+                                          child: Text('Data'))
                                       : Text(
                                           'Assignee: Xyz',
                                           style: TextStyle(

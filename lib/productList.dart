@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'global.dart' as global;
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:sigma_task/firstCheck.dart';
@@ -22,9 +22,16 @@ class ProductList extends StatefulWidget {
 
 class _ProductListState extends State<ProductList> {
   Future<Welcome> getProductData() async {
-    String url =
-        'https://stl-api-staging.herokuapp.com/mock/warehouse/product/pending?orderId=61f3b7b2d17b1cd797c19de8&userId=5fcb6fd3a7000000171173c2&checkNo=1';
-    final response = await http.get(Uri.parse(url));
+    // String url = global.BASE_URL;
+    // var queryParameters = {
+    //   'orderId': "61f3b7b2d17b1cd797c19de8",
+    //   'userId': "5fcb6fd3a7000000171173c2",
+    //   'checkNo': 1
+    // };
+    // var uri =
+    //     Uri.https(url, '/mock/warehouse/product/pending', queryParameters);
+    final response = await http.get(Uri.parse(
+        'https://stl-api-staging.herokuapp.com/mock/warehouse/product/pending?orderId=61f3b7b2d17b1cd797c19de8&userId=5fcb6fd3a7000000171173c2&checkNo=1'));
     final jsonData = jsonDecode(response.body);
 
     return Welcome.fromJson(jsonData);
@@ -49,6 +56,7 @@ class _ProductListState extends State<ProductList> {
         builder: (context, snapshot) {
           if (snapshot.hasData)
             return ListView.builder(
+                addAutomaticKeepAlives: true,
                 itemBuilder: (context, index) => OutlinedButton(
                       style: OutlinedButton.styleFrom(
                           side: BorderSide(color: Colors.transparent)),

@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:sigma_task/dropdownWidget.dart';
 import 'package:http/http.dart' as http;
-import 'package:sigma_task/detailsArray.dart';
 
 class ProductData extends StatefulWidget {
   Function upDateArray;
@@ -38,13 +39,25 @@ class ProductData extends StatefulWidget {
       required this.quantityRequired,
       required this.unitAvailable,
       required this.unitRequired});
+
   @override
   State<ProductData> createState() => _ProductDataState();
 }
 
-class _ProductDataState extends State<ProductData> {
+class _ProductDataState extends State<ProductData>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   int selectedValue = 0;
+
   bool csChecked = true;
+
+  void dropDownCallBackFunction(int value) {
+    setState(() {
+      selectedValue = value;
+    });
+  }
+
   Future<void> updateProductDetails(bool newValue) async {
     final url = 'https://stl-api-staging.herokuapp.com/mock/warehouse/check/1';
     final data = {
@@ -65,8 +78,13 @@ class _ProductDataState extends State<ProductData> {
     });
   }
 
+  void checkBoxCallBack(bool value) {
+    widget.isChecked = value;
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     double size = MediaQuery.of(context).size.width;
     double sizeh = MediaQuery.of(context).size.height;
     return Row(children: [
@@ -146,41 +164,10 @@ class _ProductDataState extends State<ProductData> {
                         0xff595454,
                       ),
                       width: 1)),
-              child: DropdownButton(
-                underline: Container(),
-                icon: Container(
-                    width: 14,
-                    height: 11,
-                    child: Image.asset('assets/Polygon 7.png')),
-                items: [
-                  DropdownMenuItem(value: 1, child: Text('1')),
-                  DropdownMenuItem(value: 2, child: Text('2')),
-                  DropdownMenuItem(value: 3, child: Text('3')),
-                  DropdownMenuItem(value: 4, child: Text('4')),
-                  DropdownMenuItem(value: 5, child: Text('5')),
-                  DropdownMenuItem(value: 6, child: Text('6')),
-                  DropdownMenuItem(value: 7, child: Text('7')),
-                  DropdownMenuItem(value: 8, child: Text('8')),
-                  DropdownMenuItem(value: 9, child: Text('9')),
-                  DropdownMenuItem(value: 10, child: Text('10')),
-                ],
-                hint: Container(
-                  margin: EdgeInsets.only(left: 12),
-                  child: Text(
-                    widget.unitAvailable,
-                    style: TextStyle(
-                        fontSize: widget.value == 1 ? 12 : 14,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Montserrat',
-                        color: Color(0xff595454)),
-                  ),
-                ),
-                onChanged: (int? value) {
-                  setState(() {
-                    selectedValue = value!;
-                  });
-                },
-              ))
+              child: DropDownWidget(
+                  dropDownCallBack: dropDownCallBackFunction,
+                  unitAvailable: widget.unitAvailable,
+                  value: widget.value))
           : SizedBox(
               width: 1,
             ),
@@ -257,7 +244,7 @@ class _ProductDataState extends State<ProductData> {
                     updateProductDetails(newValue!);
 
                     if (newValue == true) {
-                      final data = {
+                      widget.upDateArray({
                         "orderId": widget.orderId,
                         "userId": "5fcb6fd3a7000000171173c2",
                         "productDetails": [
@@ -268,29 +255,9 @@ class _ProductDataState extends State<ProductData> {
                             "unitAv": widget.unitAvailable
                           }
                         ]
-                      };
-                      final response = await http.put(
-                        Uri.parse(
-                            'https://stl-api-staging.herokuapp.com/mock/warehouse/save'),
-                        body: jsonEncode(data),
-                      );
-                      print(response.statusCode);
-                      print(response.body);
+                      });
                     }
                   }))
     ]);
   }
 }
-
-// class CheckBoxWidget extends StatelessWidget {
-//   final bool isChecked;
-//   final Function checkboxCallBack;
-//   CheckBoxWidget({required this.checkboxCallBack, required this.isChecked});
-//   @override
-//   Widget build(BuildContext context) {
-//     return Checkbox(
-//         checkColor: Colors.green,
-//         value: isChecked,
-//         onChanged: checkboxCallBack());
-//   }
-// }

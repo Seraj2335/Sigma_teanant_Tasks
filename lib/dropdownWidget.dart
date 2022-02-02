@@ -1,45 +1,53 @@
 import 'package:flutter/material.dart';
 
 class DropDownWidget extends StatefulWidget {
+  const DropDownWidget({
+    required this.dropDownCallBack,
+    required this.unitAvailable,
+    required this.value,
+  });
+
+  final String unitAvailable;
+  final int value;
+  final Function dropDownCallBack;
+
   @override
   State<DropDownWidget> createState() => _DropDownWidgetState();
 }
 
 class _DropDownWidgetState extends State<DropDownWidget> {
-  int _value = 1;
-
+  int selectedValue = 0;
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
       underline: Container(),
       icon: Container(
-        padding: EdgeInsets.only(right: 10),
-        child: Icon(
-          Icons.arrow_drop_down,
-          color: Color(0xffFFA000),
-        ),
-      ),
+          width: 14, height: 11, child: Image.asset('assets/Polygon 7.png')),
       items: [
-        DropdownMenuItem(
-          child: Text('Value1'),
-          value: 1,
-        ),
-        DropdownMenuItem(
-          child: Text('Value2'),
-          value: 2,
-        )
+        DropdownMenuItem(value: 1, child: Text('1')),
+        DropdownMenuItem(value: 2, child: Text('2')),
+        DropdownMenuItem(value: 3, child: Text('3')),
+        DropdownMenuItem(value: 4, child: Text('4')),
+        DropdownMenuItem(value: 5, child: Text('5')),
+        DropdownMenuItem(value: 6, child: Text('6')),
+        DropdownMenuItem(value: 7, child: Text('7')),
+        DropdownMenuItem(value: 8, child: Text('8')),
+        DropdownMenuItem(value: 9, child: Text('9')),
+        DropdownMenuItem(value: 10, child: Text('10')),
       ],
-      hint: Text(
-        'Assignee',
-        style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: Color(0xff595454),
-            fontSize: 14),
+      hint: Container(
+        margin: EdgeInsets.only(left: 12),
+        child: Text(
+          widget.unitAvailable,
+          style: TextStyle(
+              fontSize: widget.value == 1 ? 12 : 14,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Montserrat',
+              color: Color(0xff595454)),
+        ),
       ),
       onChanged: (int? value) {
-        setState(() {
-          _value = value!;
-        });
+        widget.dropDownCallBack(value);
       },
     );
   }
