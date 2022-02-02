@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:sigma_task/dropdownWidget.dart';
+// import 'package:sigma_task/dropdownWidget.dart';
 import 'package:sigma_task/firstCheck.dart';
 import 'package:sigma_task/model.dart';
 import 'package:sigma_task/orderDetails.dart';
@@ -156,7 +156,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.75,
+                                width: MediaQuery.of(context).size.width * 0.85,
                                 padding: EdgeInsets.only(
                                   left:
                                       MediaQuery.of(context).size.width * 0.25,

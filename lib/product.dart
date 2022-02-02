@@ -158,7 +158,7 @@ class _ProductDataState extends State<ProductData>
             ),
       widget.value == 1
           ? Container(
-              width: MediaQuery.of(context).size.width * 0.24,
+              width: MediaQuery.of(context).size.width * 0.25,
               margin: EdgeInsets.only(top: 10),
               height: 28,
               decoration: BoxDecoration(
