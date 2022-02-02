@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:sigma_task/dropdownWidget.dart';
 import 'package:sigma_task/firstCheck.dart';
 import 'package:sigma_task/model.dart';
 import 'package:sigma_task/orderDetails.dart';
@@ -50,6 +51,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
     widget.updatedValue(data);
   }
 
+  int? selectedValue;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Welcome>(
@@ -61,6 +63,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
             );
           return Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(color: Colors.white),
               backgroundColor: Color(0xffF7A51C),
               actions: [
                 Container(
@@ -233,7 +236,39 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                                   color: Colors.black54),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10))),
-                                          child: Text('Data'))
+                                          child: DropdownButton(
+                                              underline: Container(),
+                                              icon: Container(
+                                                  width: 14,
+                                                  height: 11,
+                                                  child: Image.asset(
+                                                      'assets/Polygon 7.png')),
+                                              items: [
+                                                DropdownMenuItem(
+                                                    value: 1, child: Text('1')),
+                                                DropdownMenuItem(
+                                                    value: 2, child: Text('2')),
+                                                DropdownMenuItem(
+                                                    value: 3, child: Text('3')),
+                                              ],
+                                              hint: Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 12),
+                                                child: Text(
+                                                  'Assignee',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color(0xff595454)),
+                                                ),
+                                              ),
+                                              onChanged: (int? value) {
+                                                setState(() {
+                                                  selectedValue = value!;
+                                                });
+                                              }))
                                       : Text(
                                           'Assignee: Xyz',
                                           style: TextStyle(
@@ -270,7 +305,9 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          widget.value == 1 ? 'Go to Double Check' : 'Next',
+                                          widget.value == 1
+                                              ? 'Go to Double Check'
+                                              : 'Next',
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500,

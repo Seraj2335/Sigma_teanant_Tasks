@@ -11,7 +11,7 @@ class _FirstScreenState extends State<FirstScreen> {
 
   void upDatedValue(int data) {
     setState(() {
-      data+=1;
+      data = 2;
     });
     changedData = data;
   }
@@ -20,16 +20,22 @@ class _FirstScreenState extends State<FirstScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-            child: ElevatedButton(
-      onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>
-            DoubleCheck(
-              updatedValue: upDatedValue,
-              value: changedData,
-            ),
-        ));
-      },
-      child: null,
-    )));
+      child: Center(
+          child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.only(top: 20, bottom: 20)),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DoubleCheck(
+                  updatedValue: upDatedValue,
+                  value: changedData,
+                ),
+              ));
+        },
+        child: Text('Navigate To MainScreen'),
+      )),
+    ));
   }
 }
