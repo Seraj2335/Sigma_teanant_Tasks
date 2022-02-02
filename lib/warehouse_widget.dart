@@ -1,15 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
 import 'package:sigma_task/firstCheck.dart';
-
 import 'package:sigma_task/model.dart';
-
 import 'package:sigma_task/orderDetails.dart';
-
 import 'package:http/http.dart' as http;
 
 class DoubleCheck extends StatefulWidget {
@@ -70,8 +64,8 @@ class _DoubleCheckState extends State<DoubleCheck> {
               backgroundColor: Color(0xffF7A51C),
               actions: [
                 Container(
-                  margin: EdgeInsets.only(
-                      right: MediaQuery.of(context).size.width * 0.05),
+                  // margin: EdgeInsets.only(
+                  //     right: MediaQuery.of(context).size.width * 0.05),
                   child: IconButton(
                       iconSize: 25,
                       onPressed: null,
@@ -79,7 +73,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                 ),
                 Container(
                   margin: EdgeInsets.only(
-                      right: MediaQuery.of(context).size.width * 0.05, top: 5),
+                      right: MediaQuery.of(context).size.width * 0.02, top: 5),
                   child: IconButton(
                       iconSize: 30,
                       onPressed: () async {
@@ -271,12 +265,12 @@ class _DoubleCheckState extends State<DoubleCheck> {
                               children: [
                                 TextButton(
                                     onPressed: () {
-                                      // value.increment();
+                                      widget.updatedValue(widget.value);
                                     },
                                     child: Row(
                                       children: [
                                         Text(
-                                          'Go to Double Check',
+                                          widget.value == 1 ? 'Go to Double Check' : 'Next',
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500,

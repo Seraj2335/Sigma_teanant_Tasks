@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:sigma_task/utils/colors.dart';
+
+import 'global.dart' as global;
 import 'package:flutter/material.dart';
 import 'package:sigma_task/productList.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +11,7 @@ class OrderDetails extends StatefulWidget {
   final int value;
   Function getTheList;
   Function changeCheckValue;
+
   OrderDetails(
       {required this.value,
       required this.getTheList,
@@ -50,31 +54,43 @@ class _OrderDetailsState extends State<OrderDetails> {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  primary: Color(0xffFBA919),
+                  primary:  CustomColors.DarkOrange,
                   padding: EdgeInsets.only(top: 12, bottom: 12)),
               onPressed: () async {
                 setState(() {
                   confirmed = !confirmed;
                 });
-                // print(confirmDataList);
                 try {
                   var response = await http.put(
-                      Uri.parse(
-                          'https://stl-api-staging.herokuapp.com/mock/warehouse/confirm/1'),
+                      Uri.https(global.BASE_URL, '/mock/warehouse/confirm/1'),
                       body: jsonEncode({
-                        "orderId": "61f3b7b2d17b1cd797c19de8",
-                        "userId": "5fcb6fd3a7000000171173c2",
+                        "orderId": global.orderId,
+                        "userId": global.userId,
                         "productDetails": confirmDataList
                       }),
-                      headers: <String, String>{
-                        'Content-type': 'application/json'
-                      });
-
+                      headers: global.HEADERS);
                   setState(() {
                     confirmed = true;
                   });
                   if (response.statusCode == 200) {
-                    widget.changeCheckValue(widget.value);
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => Dialog(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height*0.10,
+                          child: Center(
+                            child: Text(
+                              "Confirmed",
+                              style: TextStyle(
+                                  color: CustomColors.DarkOrange,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
                   }
                 } catch (e) {
                   print(e.toString());

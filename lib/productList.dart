@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'global.dart' as global;
 import 'package:enum_to_string/enum_to_string.dart';
@@ -24,10 +25,23 @@ class ProductList extends StatefulWidget {
 
 class _ProductListState extends State<ProductList> {
   Future<Welcome> getProductData() async {
-    var response = await http.get(Uri.parse(
-        'https://stl-api-staging.herokuapp.com/mock/warehouse/product/pending?orderId=61f3b7b2d17b1cd797c19de8&userId=5fcb6fd3a7000000171173c2&checkNo=${widget.value}'));
-    var jsonData = jsonDecode(response.body);
-    return Welcome.fromJson(jsonData);
+    Map<String, String> queryParams = {
+      'orderId': '61f3b7b2d17b1cd797c19de8',
+      'userId': '5fcb6fd3a7000000171173c2',
+      'checkNo': widget.value.toString(),
+    };
+    try{
+      var headers = {
+        HttpHeaders.contentTypeHeader: 'application/json',
+      };
+      final uri = Uri.https(global.BASE_URL, '/mock/warehouse/product/pending', queryParams);
+      final response = await http.get(uri, headers: headers);
+      var jsonData = jsonDecode(response.body);
+      return Welcome.fromJson(jsonData);
+    } catch(e) {
+      print(e.toString());
+      return Welcome.fromJson({});
+    }
   }
 
   late Future<Welcome> proDuctData;

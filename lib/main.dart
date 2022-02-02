@@ -2,15 +2,16 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:sigma_task/firstCheck.dart';
+import 'package:sigma_task/first_screen.dart';
 import 'global.dart' as global;
 
-import 'package:sigma_task/doubleCheck.dart';
+import 'package:sigma_task/warehouse_widget.dart';
 import 'package:sigma_task/screenValue.dart';
 import 'package:sigma_task/sizeConfig.dart';
 
 void main() async {
   runApp(DevicePreview(builder: (context) => MyApp()));
-  // global.BASE_URL;
 }
 
 class MyApp extends StatefulWidget {
@@ -19,21 +20,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int changedData = 1;
-
-  void upDatedValue(int data) {
-    setState(() {
-      data = 2;
-    });
-
-    changedData = data;
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Sigma Teanant',
+      title: 'Sigma Tenant',
       theme: ThemeData(
           // This is the theme of your application.
           //
@@ -45,10 +36,7 @@ class _MyAppState extends State<MyApp> {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           primarySwatch: Colors.amber),
-      home: DoubleCheck(
-        updatedValue: upDatedValue,
-        value: changedData,
-      ),
+      home: FirstScreen(),
     );
   }
 }
