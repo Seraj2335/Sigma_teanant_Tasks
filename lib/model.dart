@@ -221,7 +221,6 @@ class Product {
     required this.salesProfileList,
     required this.createdAt,
     required this.updatedAt,
-    required this.v,
     required this.isNewProduct,
     required this.imageCount,
   });
@@ -234,14 +233,13 @@ class Product {
   String category;
   String masterCategoryId;
   double sellingPrice;
-  Unit unit;
+  String unit;
   int ratio;
   String imagePath;
   List<dynamic> storeProfileList;
   List<dynamic> salesProfileList;
   DateTime createdAt;
   DateTime updatedAt;
-  int v;
   bool isNewProduct;
   int imageCount;
 
@@ -254,7 +252,7 @@ class Product {
         category: json["category"],
         masterCategoryId: json["masterCategoryId"],
         sellingPrice: json["sellingPrice"].toDouble(),
-        unit: unitValues.map[json["unit"]]!,
+        unit: json["unit"]!,
         ratio: json["ratio"],
         imagePath: json["imagePath"],
         storeProfileList:
@@ -263,7 +261,6 @@ class Product {
             List<dynamic>.from(json["salesProfileList"].map((x) => x)),
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        v: json["__v"],
         isNewProduct: json["isNewProduct"],
         imageCount: json["imageCount"],
       );
@@ -277,14 +274,13 @@ class Product {
         "category": category,
         "masterCategoryId": masterCategoryId,
         "sellingPrice": sellingPrice,
-        "unit": unitValues.reverse[unit],
+        "unit": unit,
         "ratio": ratio,
         "imagePath": imagePath,
         "storeProfileList": List<dynamic>.from(storeProfileList.map((x) => x)),
         "salesProfileList": List<dynamic>.from(salesProfileList.map((x) => x)),
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-        "__v": v,
         "isNewProduct": isNewProduct,
         "imageCount": imageCount,
       };
@@ -309,11 +305,6 @@ class InQty {
         "amountInUnits": amountInUnits,
       };
 }
-
-enum Unit { PCS, SETS, BOXES }
-
-final unitValues =
-    EnumValues({"BOXES": Unit.BOXES, "PCS": Unit.PCS, "SETS": Unit.SETS});
 enum UnitAvEnum { CARTONS, PCS, BOXES }
 
 final unitAvEnumValues = EnumValues({

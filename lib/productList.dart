@@ -88,7 +88,7 @@ class _ProductListState extends State<ProductList> {
                                     .productDetails[index].product.id,
                                 orderId: snapshot.data!.tempOrder.id,
                                 unit: snapshot.data!.tempOrder
-                                    .productDetails[index].product.unit.toString(),
+                                    .productDetails[index].product.unit,
                                 doubleCheck: snapshot.data!.tempOrder
                                     .productDetails[index].doubleCheck,
                                 value: widget.value,
