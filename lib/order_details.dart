@@ -37,7 +37,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-            height: MediaQuery.of(context).size.height * 0.72,
+            height: MediaQuery.of(context).size.height * 0.45,
             margin: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height * 0.20,
                 left: widget.value == 1 ? 13 : 18,

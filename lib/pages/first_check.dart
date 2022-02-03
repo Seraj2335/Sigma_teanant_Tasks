@@ -114,12 +114,14 @@ class _FirstCheckState extends State<FirstCheck> {
                 ),
                 Container(
                     margin: EdgeInsets.only(
-                        top: 15,
+                        top: 10,
                         bottom: 10,
-                        right: MediaQuery.of(context).size.width * 0.05),
+                        right: MediaQuery.of(context).size.width * 0.02
+                    ),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
-                        border: Border.all(width: 1, color: Colors.white)),
+                        border: Border.all(width: 1, color: Colors.white),
+                    ),
                     child: TextButton(
                       onPressed: () async {
                         Map<String, dynamic> queryParams = {
@@ -135,20 +137,17 @@ class _FirstCheckState extends State<FirstCheck> {
                       child: Text(
                         'SAVE',
                         style: TextStyle(
+                          fontSize: 14,
                           color: Colors.white,
                         ),
                       ),
                     ))
               ],
               title: Text(
-                widget.value == 1
-                    ? 'Order Details'
-                    : widget.value == 2
-                        ? 'Double Check'
-                        : 'Loading Check',
+                'Order Details',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.w300),
               ),
             ),
