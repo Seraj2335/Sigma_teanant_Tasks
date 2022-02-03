@@ -1,32 +1,22 @@
-import 'dart:convert';
-
 import 'package:barcode_widget/barcode_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sigma_task/dropdownWidget.dart';
-import 'package:sigma_task/generateBarCode.dart';
-import 'package:sigma_task/localDB.dart';
-import 'package:sigma_task/model.dart';
 
-import 'package:sqflite/sqflite.dart';
-import 'package:http/http.dart' as http;
-
-class FirstCheck extends StatefulWidget {
+class BarcodeDialog extends StatefulWidget {
   final int value;
   String barCodeValue;
   // String unit;
   // String itemName;
   // String itemRef;
   // String imagePath;
-  FirstCheck({
+  BarcodeDialog({
     required this.barCodeValue,
     required this.value,
   });
   @override
-  State<FirstCheck> createState() => _FirstCheckState();
+  State<BarcodeDialog> createState() => _BarcodeDialogState();
 }
 
-class _FirstCheckState extends State<FirstCheck> {
+class _BarcodeDialogState extends State<BarcodeDialog> {
   bool isChecked = false;
 
   int selectedValue = 0;
@@ -95,7 +85,6 @@ class _FirstCheckState extends State<FirstCheck> {
                               Text('Carton',
                                   style: TextStyle(
                                       color: Color(0xff595454),
-                                      fontFamily: 'Montserrat',
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500)),
                               Container(
@@ -104,7 +93,6 @@ class _FirstCheckState extends State<FirstCheck> {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         color: Color(0xff595454),
-                                        fontFamily: 'Montserrat',
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500)),
                               ),
@@ -113,7 +101,6 @@ class _FirstCheckState extends State<FirstCheck> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           color: Color(0xff595454),
-                                          fontFamily: 'Montserrat',
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500))),
                             ],

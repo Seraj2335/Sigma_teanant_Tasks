@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'global.dart' as global;
+import '../config/global.dart' as global;
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:sigma_task/firstCheck.dart';
+import 'package:sigma_task/widgets/barcode_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:sigma_task/product.dart';
 import 'package:sigma_task/model.dart';
@@ -67,7 +65,7 @@ class _ProductListState extends State<ProductList> {
                         showDialog(
                             context: context,
                             builder: (context) => Dialog(
-                                    child: FirstCheck(
+                                    child: BarcodeDialog(
                                   barCodeValue: snapshot.data!.tempOrder.id,
                                   value: widget.value,
                                 )));

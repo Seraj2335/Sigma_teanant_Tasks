@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sigma_task/dropdownWidget.dart';
 import 'package:http/http.dart' as http;
 import 'package:sigma_task/utils/colors.dart';
-import 'global.dart' as global;
+import '../config/global.dart' as global;
 
 class ProductData extends StatefulWidget {
   List<dynamic> cartonId;

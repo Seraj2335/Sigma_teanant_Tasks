@@ -43,7 +43,6 @@ class TempOrder {
     required this.date,
     required this.createdAt,
     required this.updatedAt,
-    required this.v,
   });
 
   String id;
@@ -66,7 +65,6 @@ class TempOrder {
   String date;
   DateTime createdAt;
   DateTime updatedAt;
-  int v;
 
   factory TempOrder.fromJson(Map<String, dynamic> json) => TempOrder(
         id: json["_id"],
@@ -91,7 +89,6 @@ class TempOrder {
         date: DateFormat.yMMMEd().format(DateTime.parse(json["date"])),
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        v: json["__v"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -116,7 +113,6 @@ class TempOrder {
         "date": date,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-        "__v": v,
       };
 }
 

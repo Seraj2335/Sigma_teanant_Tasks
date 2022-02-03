@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:sigma_task/warehouse_widget.dart';
+import 'package:sigma_task/pages/first_check.dart';
 
-class FirstScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  State<FirstScreen> createState() => _FirstScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _FirstScreenState extends State<FirstScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   int changedData = 1;
 
   void updatedValue(int data) {
     setState(() {
-      data+=1;
+      data;
     });
     changedData = data;
   }
@@ -27,7 +27,7 @@ class _FirstScreenState extends State<FirstScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DoubleCheck(
+                builder: (context) => FirstCheck(
                   updatedValue: updatedValue,
                   value: changedData,
                 ),
