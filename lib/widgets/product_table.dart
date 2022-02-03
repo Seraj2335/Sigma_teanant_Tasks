@@ -4,7 +4,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:sigma_task/widgets/barcode_dialog.dart';
 import 'package:http/http.dart' as http;
-import 'package:sigma_task/product.dart';
+import 'package:sigma_task/widgets/product.dart';
 import 'package:sigma_task/model.dart';
 
 class ProductTable extends StatefulWidget {
@@ -62,13 +62,13 @@ class _ProductTableState extends State<ProductTable> {
                   style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Colors.transparent)),
                   onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                            child: BarcodeDialog(
-                              barCodeValue: snapshot.data!.tempOrder.id,
-                              value: widget.value,
-                            )));
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (context) => Dialog(
+                    //         child: BarcodeDialog(
+                    //           barCodeValue: snapshot.data!.tempOrder.id,
+                    //           value: widget.value,
+                    //         )));
                   },
                   child: Container(
                     padding: EdgeInsets.only(top: 8),

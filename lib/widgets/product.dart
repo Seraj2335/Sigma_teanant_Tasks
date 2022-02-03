@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sigma_task/dropdownWidget.dart';
+import 'package:sigma_task/widgets/custom_dropdown.dart';
 import 'package:http/http.dart' as http;
 import 'package:sigma_task/utils/colors.dart';
-import '../config/global.dart' as global;
+import 'package:sigma_task/widgets/av_quantity_input.dart';
+import '../../config/global.dart' as global;
 
 class ProductData extends StatefulWidget {
   List<dynamic> cartonId;
@@ -60,7 +61,7 @@ class _ProductDataState extends State<ProductData>
 
   bool csChecked = true;
 
-  void dropDownCallBackFunction(int value) {
+  void dropdownCallback(int value) {
     setState(() {
       selectedValue = value;
     });
@@ -91,8 +92,7 @@ class _ProductDataState extends State<ProductData>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    double size = MediaQuery.of(context).size.width;
-    double sizeh = MediaQuery.of(context).size.height;
+    double size_w = MediaQuery.of(context).size.width;
     return Row(children: [
       // Container(
       //   width: size / 18,
@@ -101,9 +101,6 @@ class _ProductDataState extends State<ProductData>
       //   color: Colors.white,
       //   child: Image(image: NetworkImage()),
       // ),
-      // widget.value == 1
-      //     ? SizedBox(width: size / 20)
-      //     : SizedBox(width: sizeh / 18),
       Expanded(
         flex: 3,
         child: Column(
@@ -138,6 +135,14 @@ class _ProductDataState extends State<ProductData>
             SizedBox(
               height: 0,
             ),
+            Text(
+              widget.quantityRequired.toString() + ' ' + widget.unitRequired,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
             if (widget.value != 1 && widget.cartonId.length > 0)
               Text(
                 widget.cartonId.length == 2
@@ -155,91 +160,95 @@ class _ProductDataState extends State<ProductData>
           ],
         ),
       ),
-      // widget.value == 1
-      //     ? SizedBox(
-      //         width: size / 20,
-      //       )
-      //     : SizedBox(
-      //         width: size / 18,
-      //       ),
       widget.value == 1
           ? Expanded(
-              flex: 1,
-              child: Container(
-                // width: MediaQuery.of(context).size.width * 0.25,
-                margin: EdgeInsets.only(top: 10),
-                height: 28,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(width: 1)),
-                child: Center(
-                  child: DropDownWidget(
-                    dropDownCallBack: dropDownCallBackFunction,
-                    unitAvailable: (widget.unitAvailable == 'CARTONS')
-                        ? 'CTN'
-                        : widget.unitAvailable,
-                    value: (widget.unitAvailable == 'CARTONS') ? 1 : 2,
-                    unit: widget.unit,
+              flex: 2,
+              child: Column(
+                children: [
+                  if (size_w < 700)
+                    Column(
+                      children: [
+                        Text(
+                          'Available',
+                          style: TextStyle(
+                              fontWeight: widget.value == 1
+                                  ? FontWeight.w400
+                                  : FontWeight.w500,
+                              fontSize: 14,
+                              color: Colors.black),
+                        ),
+                        widget.value == 1
+                            ? AvailableQuantityInput(
+                                quantityAv: widget.quantityAvailable)
+                            : Text(
+                                widget.quantityAvailable.toString() +
+                                    ' ' +
+                                    widget.unitAvailable,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
+                              )
+                      ],
+                    ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    height: 28,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(width: 1)),
+                    child: Center(
+                      child: CustomDropdown(
+                        dropdownCallback: dropdownCallback,
+                        unitAvailable: (widget.unitAvailable == 'CARTONS')
+                            ? 'CTN'
+                            : widget.unitAvailable,
+                        value: (selectedValue == 0 &&
+                                widget.unitAvailable == 'CARTONS')
+                            ? 1
+                            : ((selectedValue == 0 &&
+                                    widget.unitAvailable != 'CARTONS')
+                                ? 2
+                                : selectedValue),
+                        unit: widget.unit,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             )
           : SizedBox(
               width: 1,
             ),
-      // widget.value == 1
-      //     ? SizedBox(
-      //         width: MediaQuery.of(context).size.width / 20,
-      //       )
-      //     : SizedBox(
-      //         width: MediaQuery.of(context).size.width / 18,
-      //       ),
-      //Product Available Section
-      Expanded(
-        flex: 2,
-        child: Column(
-          children: [
-            Text(
-              'Available',
-              style: TextStyle(
-                  fontWeight:
-                      widget.value == 1 ? FontWeight.w300 : FontWeight.w500,
-                  fontSize: 14,
-                  color: Colors.black),
-            ),
-            widget.value == 1
-                ? Container(
-                    width: 35,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        border: Border.all(width: 1, color: Colors.black)),
-                    child: Center(
-                        child: Text(widget.quantityAvailable.toString(),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300,
-                            ))),
-                  )
-                : Text(
-                    widget.unitAvailable,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
-                    ),
-                  )
-          ],
+      if (size_w > 700)
+        Expanded(
+          flex: 3,
+          child: Column(
+            children: [
+              Text(
+                'Available',
+                style: TextStyle(
+                    fontWeight:
+                        widget.value == 1 ? FontWeight.w400 : FontWeight.w500,
+                    fontSize: 14,
+                    color: Colors.black),
+              ),
+              widget.value == 1
+                  ? AvailableQuantityInput(quantityAv: widget.quantityAvailable)
+                  : Text(
+                      widget.quantityAvailable.toString() +
+                          ' ' +
+                          widget.unitAvailable,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                      ),
+                    )
+            ],
+          ),
         ),
-      ),
-      // widget.value == 2
-      //     ? SizedBox(
-      //         width: MediaQuery.of(context).size.width / 20,
-      //       )
-      //     : SizedBox(
-      //         width: MediaQuery.of(context).size.width / 18,
-      //       ),
-      // Checkbox section
       Expanded(
         flex: 1,
         child: Container(

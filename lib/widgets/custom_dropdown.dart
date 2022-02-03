@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class DropDownWidget extends StatefulWidget {
-  const DropDownWidget({
-    required this.dropDownCallBack,
+class CustomDropdown extends StatefulWidget {
+  const CustomDropdown({
+    required this.dropdownCallback,
     required this.unitAvailable,
     required this.value,
     required this.unit,
@@ -11,14 +11,13 @@ class DropDownWidget extends StatefulWidget {
   final String unitAvailable;
   final int value;
   final String unit;
-  final Function dropDownCallBack;
+  final Function dropdownCallback;
 
   @override
-  State<DropDownWidget> createState() => _DropDownWidgetState();
+  State<CustomDropdown> createState() => _CustomDropdownState();
 }
 
-class _DropDownWidgetState extends State<DropDownWidget> {
-  int selectedValue = 0;
+class _CustomDropdownState extends State<CustomDropdown> {
   var itemArr = [
     DropdownMenuItem(
       value: 'CTN',
@@ -28,6 +27,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
+      value: widget.value,
       underline: Container(),
       icon: Container(
           height: 20,
@@ -37,18 +37,18 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         DropdownMenuItem(value: 1, child: Text('CTN')),
         DropdownMenuItem(value: 2, child: Text(widget.unit)),
       ],
-      hint: Container(
-        margin: EdgeInsets.only(left: 12),
-        child: Text(
-          widget.unitAvailable,
-          style: TextStyle(
-              fontSize: widget.value == 1 ? 12 : 14,
-              fontWeight: FontWeight.w600,
-          )
-        ),
-      ),
+      // hint: Container(
+      //   margin: EdgeInsets.only(left: 12),
+      //   child: Text(
+      //     widget.unitAvailable,
+      //     style: TextStyle(
+      //         fontSize: widget.value == 1 ? 12 : 14,
+      //         fontWeight: FontWeight.w600,
+      //     )
+      //   ),
+      // ),
       onChanged: (int? value) {
-        widget.dropDownCallBack(value);
+        widget.dropdownCallback(value);
       },
     );
   }

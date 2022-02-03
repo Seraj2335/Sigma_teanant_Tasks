@@ -44,7 +44,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 right: widget.value == 1 ? 12 : 16,
                 bottom: 10),
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.black38, width: 0.5),
+                border: Border.all(color: Colors.black, width: 0.5),
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: ProductTable(
               getArrayValue: getArrayValue,

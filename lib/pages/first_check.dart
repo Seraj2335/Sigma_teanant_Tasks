@@ -12,7 +12,7 @@ import 'package:sigma_task/order_details.dart';
 import 'package:http/http.dart' as http;
 
 class FirstCheck extends StatefulWidget {
-  int value;
+  final int value;
   final Function updatedValue;
 
   FirstCheck({required this.value, required this.updatedValue});
@@ -74,10 +74,10 @@ class _FirstCheckState extends State<FirstCheck> {
     return FutureBuilder<Welcome>(
         future: data,
         builder: (context, snapshot) {
-          if (!snapshot.hasData)
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+          // if (!snapshot.hasData)
+          //   return Center(
+          //     child: CircularProgressIndicator(),
+          //   );
           return Scaffold(
             appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.white),
@@ -152,28 +152,32 @@ class _FirstCheckState extends State<FirstCheck> {
                     fontWeight: FontWeight.w300),
               ),
             ),
-            body: Stack(
-              children: [
-                FutureBuilder<Welcome>(
-                    future: data,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return CircularProgressIndicator();
-                      }
-                      return StoreDetails(
-                        snapshot: snapshot,
+            body: (!snapshot.hasData)
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Stack(
+                    children: [
+                      FutureBuilder<Welcome>(
+                          future: data,
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return CircularProgressIndicator();
+                            }
+                            return StoreDetails(
+                              snapshot: snapshot,
+                              value: widget.value,
+                            );
+                          }),
+                      OrderDetails(
                         value: widget.value,
-                      );
-                    }),
-                OrderDetails(
-                  value: widget.value,
-                  getTheList: getTheFinalList,
-                ),
-                WarehouseFooter(
-                  value: widget.value,
-                ),
-              ],
-            ),
+                        getTheList: getTheFinalList,
+                      ),
+                      WarehouseFooter(
+                        value: widget.value,
+                      ),
+                    ],
+                  ),
           );
         });
   }

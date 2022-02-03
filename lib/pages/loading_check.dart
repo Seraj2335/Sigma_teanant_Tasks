@@ -12,7 +12,7 @@ import 'package:sigma_task/order_details.dart';
 import 'package:http/http.dart' as http;
 
 class LoadingCheck extends StatefulWidget {
-  int value;
+  final int value;
 
   LoadingCheck({required this.value});
 
@@ -69,10 +69,6 @@ class _LoadingCheckState extends State<LoadingCheck> {
     return FutureBuilder<Welcome>(
         future: data,
         builder: (context, snapshot) {
-          if (!snapshot.hasData)
-            return Center(
-              child: CircularProgressIndicator(),
-            );
           return Scaffold(
             appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.white),
@@ -122,6 +118,7 @@ class _LoadingCheckState extends State<LoadingCheck> {
                           'userId': global.userId,
                           'productDetails': json.encode(listData),
                         };
+                        print(queryParams);
                         final uri = Uri.https(global.BASE_URL,
                             '/mock/warehouse/save', queryParams);
                         final response =
@@ -143,7 +140,10 @@ class _LoadingCheckState extends State<LoadingCheck> {
                     fontWeight: FontWeight.w300),
               ),
             ),
-            body: Stack(
+            body: (!snapshot.hasData)
+                ? Center(
+              child: CircularProgressIndicator(),
+            ): Stack(
               children: [
                 FutureBuilder<Welcome>(
                     future: data,

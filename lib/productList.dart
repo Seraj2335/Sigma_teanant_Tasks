@@ -4,7 +4,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:sigma_task/widgets/barcode_dialog.dart';
 import 'package:http/http.dart' as http;
-import 'package:sigma_task/product.dart';
+import 'package:sigma_task/widgets/product.dart';
 import 'package:sigma_task/model.dart';
 
 class ProductList extends StatefulWidget {

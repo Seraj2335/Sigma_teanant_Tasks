@@ -12,7 +12,7 @@ import 'package:sigma_task/order_details.dart';
 import 'package:http/http.dart' as http;
 
 class DoubleCheck extends StatefulWidget {
-  int value;
+  final int value;
 
   DoubleCheck({required this.value});
 
@@ -69,10 +69,6 @@ class _DoubleCheckState extends State<DoubleCheck> {
     return FutureBuilder<Welcome>(
         future: data,
         builder: (context, snapshot) {
-          if (!snapshot.hasData)
-            return Center(
-              child: CircularProgressIndicator(),
-            );
           return Scaffold(
             appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.white),
@@ -143,7 +139,10 @@ class _DoubleCheckState extends State<DoubleCheck> {
                     fontWeight: FontWeight.w300),
               ),
             ),
-            body: Stack(
+            body: (!snapshot.hasData)
+                ? Center(
+              child: CircularProgressIndicator(),
+            ): Stack(
               children: [
                 FutureBuilder<Welcome>(
                     future: data,
