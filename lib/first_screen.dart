@@ -9,9 +9,9 @@ class FirstScreen extends StatefulWidget {
 class _FirstScreenState extends State<FirstScreen> {
   int changedData = 1;
 
-  void upDatedValue(int data) {
+  void updatedValue(int data) {
     setState(() {
-      data = 2;
+      data+=1;
     });
     changedData = data;
   }
@@ -28,7 +28,7 @@ class _FirstScreenState extends State<FirstScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => DoubleCheck(
-                  updatedValue: upDatedValue,
+                  updatedValue: updatedValue,
                   value: changedData,
                 ),
               ));

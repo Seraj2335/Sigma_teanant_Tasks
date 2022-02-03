@@ -24,15 +24,14 @@ class _ProductListState extends State<ProductList> {
     Map<String, String> queryParams = {
       'orderId': global.orderId,
       'userId': global.userId,
-      'checkNo': "${widget.value}"
+      'checkNo': widget.value.toString(),
     };
-    try {
-      final uri = Uri.https(
-          global.BASE_URL, '/mock/warehouse/product/pending', queryParams);
+    try{
+      final uri = Uri.https(global.BASE_URL, '/mock/warehouse/product/pending', queryParams);
       final response = await http.get(uri, headers: global.HEADERS);
       var jsonData = jsonDecode(response.body);
       return Welcome.fromJson(jsonData);
-    } catch (e) {
+    } catch(e) {
       print(e.toString());
       return Welcome.fromJson({});
     }
@@ -89,8 +88,7 @@ class _ProductListState extends State<ProductList> {
                                     .productDetails[index].product.id,
                                 orderId: snapshot.data!.tempOrder.id,
                                 unit: snapshot.data!.tempOrder
-                                    .productDetails[index].product.unit
-                                    .toString(),
+                                    .productDetails[index].product.unit,
                                 doubleCheck: snapshot.data!.tempOrder
                                     .productDetails[index].doubleCheck,
                                 value: widget.value,
@@ -115,11 +113,9 @@ class _ProductListState extends State<ProductList> {
                                         .productDetails[index].unitAv),
                                 ratio: snapshot.data!.tempOrder
                                     .productDetails[index].product.ratio,
-                                unitRequired: EnumToString.convertToString(snapshot
-                                    .data!
-                                    .tempOrder
-                                    .productDetails[index]
-                                    .unitReq)),
+                                unitRequired: EnumToString.convertToString(
+                                    snapshot.data!.tempOrder
+                                        .productDetails[index].unitReq)),
                             SizedBox(
                               height: 16,
                             ),

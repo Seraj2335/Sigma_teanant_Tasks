@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:sigma_task/utils/colors.dart';
 import 'global.dart' as global;
 
-// import 'package:sigma_task/dropdownWidget.dart';
 import 'package:sigma_task/firstCheck.dart';
 import 'package:sigma_task/model.dart';
 import 'package:sigma_task/orderDetails.dart';
@@ -81,7 +81,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
           return Scaffold(
             appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.white),
-              backgroundColor: Color(0xffF7A51C),
+              backgroundColor: CustomColors.DarkOrange,
               actions: [
                 Container(
                   // margin: EdgeInsets.only(
@@ -112,55 +112,45 @@ class _DoubleCheckState extends State<DoubleCheck> {
                       },
                       icon: Image.asset('assets/barcode-scanner-1 1.png')),
                 ),
-                widget.value == 1
-                    ? Container(
-                        margin: EdgeInsets.only(
-                            top: 15,
-                            bottom: 10,
-                            right: MediaQuery.of(context).size.width * 0.05),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            border:
-                                Border.all(width: 1, color: Color(0xffFFFFFF))),
-                        child: TextButton(
-                          onPressed: () async {
-                            final url =
-                                'https://stl-api-staging.herokuapp.com/mock/warehouse/save';
-                            for (var i in listData) {
-                              final response = await http.put(Uri.parse(url),
-                                  body: jsonEncode(
-                                    {
-                                      "order": snapshot.data!.tempOrder.id,
-                                      "userId": global.userId,
-                                      "productDetails": [i]
-                                    },
-                                  ),
-                                  headers: <String, String>{
-                                    'Content-type': 'application/json'
-                                  });
-                            }
-                          },
-                          child: Text(
-                            'SAVE',
-                            style: TextStyle(
-                              color: Color(0xffFFFFFF),
-                            ),
-                          ),
-                        ))
-                    : SizedBox(
-                        width: 0,
+                Container(
+                    margin: EdgeInsets.only(
+                        top: 15,
+                        bottom: 10,
+                        right: MediaQuery.of(context).size.width * 0.05),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        border: Border.all(width: 1, color: Colors.white)),
+                    child: TextButton(
+                      onPressed: () async {
+                        print("ListData");
+                        print(listData);
+                        Map<String, dynamic> queryParams = {
+                          'orderId': global.orderId,
+                          'userId': global.userId,
+                          'productDetails': json.encode(listData),
+                        };
+                        final uri = Uri.https(global.BASE_URL,
+                            '/mock/warehouse/save', queryParams);
+                        final response =
+                            await http.put(uri, headers: global.HEADERS);
+                      },
+                      child: Text(
+                        'SAVE',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
+                    ))
               ],
               title: Text(
                 widget.value == 1
                     ? 'Order Details'
-                    : widget.value == 3
-                        ? 'Loading Details'
-                        : 'Double Check',
+                    : widget.value == 2
+                        ? 'Double Check'
+                        : 'Loading Check',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: widget.value == 1 ? 14.8 : 22,
-                    fontFamily: 'Montserrat',
+                    fontSize: 20,
                     fontWeight: FontWeight.w300),
               ),
             ),
@@ -193,9 +183,9 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                                 .tempOrderInvoiceNo,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Montserrat')),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        )),
                                     SizedBox(
                                       height: 6,
                                     ),
@@ -204,9 +194,9 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                             snapshot.data!.tempOrder.store,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Montserrat')),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        )),
                                     SizedBox(
                                       height: 6,
                                     ),
@@ -216,17 +206,17 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                                 .toString(),
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Montserrat')),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        )),
                                     SizedBox(
                                       height: 6,
                                     ),
                                     Text('Marks: ' + 'APT',
                                         style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Montserrat')),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        )),
                                   ],
                                 ),
                               ),
@@ -242,9 +232,9 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                     child: Text(
                                       'Order Details:',
                                       style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Montserrat'),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ),
                                   trailing: widget.value == 2
@@ -279,11 +269,10 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                                 child: Text(
                                                   'Assignee',
                                                   style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 18,
                                                       fontWeight:
                                                           FontWeight.w600,
-                                                      fontFamily: 'Montserrat',
-                                                      color: Color(0xff595454)),
+                                                      color: Colors.black),
                                                 ),
                                               ),
                                               onChanged: (int? value) {
@@ -292,12 +281,11 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                                 });
                                               }))
                                       : Text(
-                                          'Assignee: Xyz',
+                                          'Assignee: Santosh',
                                           style: TextStyle(
-                                              fontFamily: 'Montserrat',
-                                              fontSize: 15,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.w600,
-                                              color: Color(0xff595454)),
+                                              color: Colors.black),
                                         )),
                             ]),
                       );
@@ -333,7 +321,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500,
-                                            color: Color(0xffFFA000),
+                                            color: CustomColors.DarkOrange,
                                           ),
                                         ),
                                         Icon(

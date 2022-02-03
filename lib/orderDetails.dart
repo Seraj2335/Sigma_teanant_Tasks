@@ -102,7 +102,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                     )
                   : Text('Confirm',
                       style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color: Color(0xffFFFFFF))),
