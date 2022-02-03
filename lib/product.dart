@@ -101,53 +101,55 @@ class _ProductDataState extends State<ProductData>
       widget.value == 1
           ? SizedBox(width: size / 20)
           : SizedBox(width: sizeh / 18),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 98,
-            child: Text(widget.itemName,
-                overflow: TextOverflow.ellipsis,
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 98,
+              child: Text(widget.itemName,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Color(0xff595454),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Montserrat')),
+            ),
+            Text(widget.itemRef,
                 style: TextStyle(
                     color: Color(0xff595454),
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     fontFamily: 'Montserrat')),
-          ),
-          Text(widget.itemRef,
-              style: TextStyle(
-                  color: Color(0xff595454),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Montserrat')),
-          SizedBox(
-            height: 1,
-          ),
-          widget.value == 3
-              ? Text('10 PCS/CTN',
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      color: Color(0xff000000),
-                      fontFamily: 'Montserrat'))
-              : SizedBox(
-                  height: 0,
-                ),
-          widget.value == 1
-              ? Text(
-                  widget.cartonId.toString(),
-                  style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      fontFamily: 'Montserrat'),
-                )
-              : Text(widget.cartonId.toString(),
-                  style: TextStyle(
-                      color: Color(0xffffaa00),
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Montserrat')),
-        ],
+            SizedBox(
+              height: 1,
+            ),
+            widget.value == 3
+                ? Text('10 PCS/CTN',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                        color: Color(0xff000000),
+                        fontFamily: 'Montserrat'))
+                : SizedBox(
+                    height: 0,
+                  ),
+            widget.value == 1
+                ? Text(
+                    widget.cartonId.toString(),
+                    style: TextStyle(
+                        color: Color(0xff000000),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                        fontFamily: 'Montserrat'),
+                  )
+                : Text(widget.cartonId.toString(),
+                    style: TextStyle(
+                        color: Color(0xffffaa00),
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Montserrat')),
+          ],
+        ),
       ),
       widget.value == 1
           ? SizedBox(
@@ -157,22 +159,24 @@ class _ProductDataState extends State<ProductData>
               width: size / 18,
             ),
       widget.value == 1
-          ? Container(
-              width: MediaQuery.of(context).size.width * 0.25,
-              margin: EdgeInsets.only(top: 10),
-              height: 28,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(
-                      color: Color(
-                        0xff595454,
-                      ),
-                      width: 1)),
-              child: Center(
-                  child: DropDownWidget(
-                      dropDownCallBack: dropDownCallBackFunction,
-                      unitAvailable: widget.unitAvailable,
-                      value: widget.value)))
+          ? Expanded(
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                margin: EdgeInsets.only(top: 10),
+                height: 28,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    border: Border.all(
+                        color: Color(
+                          0xff595454,
+                        ),
+                        width: 1)),
+                child: Center(
+                    child: DropDownWidget(
+                        dropDownCallBack: dropDownCallBackFunction,
+                        unitAvailable: widget.unitAvailable,
+                        value: widget.value))),
+          )
           : SizedBox(
               width: 1,
             ),
@@ -184,44 +188,46 @@ class _ProductDataState extends State<ProductData>
               width: MediaQuery.of(context).size.width / 18,
             ),
       //Product Available Section
-      Column(
-        children: [
-          Text('Available',
-              style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight:
-                      widget.value == 1 ? FontWeight.w300 : FontWeight.w500,
-                  fontSize: widget.value == 1 ? 11 : 12,
-                  color: widget.value == 1
-                      ? Color(0xff000000)
-                      : Color(0xff595454))),
-          SizedBox(
-            height: 6,
-          ),
-          widget.value == 1
-              ? Container(
-                  width: 30,
-                  height: 22,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      border: Border.all(width: 1, color: Color(0xffA4A4A4))),
-                  child: Center(
-                      child: Text(
-                    widget.quantityAvailable.toString(),
+      Expanded(
+        child: Column(
+          children: [
+            Text('Available',
+                style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight:
+                        widget.value == 1 ? FontWeight.w300 : FontWeight.w500,
+                    fontSize: widget.value == 1 ? 11 : 12,
+                    color: widget.value == 1
+                        ? Color(0xff000000)
+                        : Color(0xff595454))),
+            SizedBox(
+              height: 6,
+            ),
+            widget.value == 1
+                ? Container(
+                    width: 30,
+                    height: 22,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        border: Border.all(width: 1, color: Color(0xffA4A4A4))),
+                    child: Center(
+                        child: Text(
+                      widget.quantityAvailable.toString(),
+                      style: TextStyle(
+                          color: Color(0xff000000),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                          fontFamily: 'Montserrat'),
+                    )),
+                  )
+                : Text(widget.unitAvailable,
                     style: TextStyle(
-                        color: Color(0xff000000),
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
                         fontSize: 12,
-                        fontWeight: FontWeight.w300,
-                        fontFamily: 'Montserrat'),
-                  )),
-                )
-              : Text(widget.unitAvailable,
-                  style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
-                      color: Color(0xff595454)))
-        ],
+                        color: Color(0xff595454)))
+          ],
+        ),
       ),
       widget.value == 1
           ? SizedBox(
@@ -231,32 +237,34 @@ class _ProductDataState extends State<ProductData>
               width: MediaQuery.of(context).size.width / 18,
             ),
       // Checkbox section
-      Container(
-          margin: EdgeInsets.only(
-            top: widget.value == 1 ? 20 : 0,
-          ),
-          width: widget.value == 1 ? 20 : 30,
-          height: widget.value == 1 ? 20 : 30,
-          child: csChecked == false
-              ? CircularProgressIndicator()
-              : Checkbox(
-                  value: widget.firstCheck,
-                  onChanged: (newValue) async {
-                    setState(() {
-                      csChecked = !csChecked;
-                    });
+      Expanded(
+        child: Container(
+            margin: EdgeInsets.only(
+              top: widget.value == 1 ? 20 : 0,
+            ),
+            width: widget.value == 1 ? 20 : 30,
+            height: widget.value == 1 ? 20 : 30,
+            child: csChecked == false
+                ? CircularProgressIndicator()
+                : Checkbox(
+                    value: widget.firstCheck,
+                    onChanged: (newValue) async {
+                      setState(() {
+                        csChecked = !csChecked;
+                      });
 
-                    await updateProductDetails(newValue!);
-                    if (newValue == true)
-                      widget.upDateArray(
-                        {
-                          "productId": widget.productId,
-                          "quantityAv": widget.quantityAvailable,
-                          "firstCheck": widget.firstCheck,
-                          "unitAv": widget.unitAvailable
-                        },
-                      );
-                  }))
+                      await updateProductDetails(newValue!);
+                      if (newValue == true)
+                        widget.upDateArray(
+                          {
+                            "productId": widget.productId,
+                            "quantityAv": widget.quantityAvailable,
+                            "firstCheck": widget.firstCheck,
+                            "unitAv": widget.unitAvailable
+                          },
+                        );
+                    })),
+      )
     ]);
   }
 }

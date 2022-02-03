@@ -26,8 +26,8 @@ class ProductList extends StatefulWidget {
 class _ProductListState extends State<ProductList> {
   Future<Welcome> getProductData() async {
     Map<String, String> queryParams = {
-      'orderId': '61f3b7b2d17b1cd797c19de8',
-      'userId': '5fcb6fd3a7000000171173c2',
+      'orderId': global.orderId,
+      'userId': global.userId,
       'checkNo': widget.value.toString(),
     };
     try{
