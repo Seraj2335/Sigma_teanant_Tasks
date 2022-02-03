@@ -35,11 +35,12 @@ class _DoubleCheckState extends State<DoubleCheck> {
         'userId': global.userId,
         'checkNo': widget.value.toString(),
       };
-      final uri = Uri.https(global.BASE_URL, '/mock/warehouse/product/pending', queryParams);
+      final uri = Uri.https(
+          global.BASE_URL, '/mock/warehouse/product/pending', queryParams);
       final response = await http.get(uri, headers: global.HEADERS);
       var jsonData = jsonDecode(response.body);
       return Welcome.fromJson(jsonData);
-    }catch(e){
+    } catch (e) {
       return Welcome.fromJson({});
     }
   }
@@ -111,39 +112,44 @@ class _DoubleCheckState extends State<DoubleCheck> {
                       },
                       icon: Image.asset('assets/barcode-scanner-1 1.png')),
                 ),
-                Container(
-                    margin: EdgeInsets.only(
-                        top: 15,
-                        bottom: 10,
-                        right: MediaQuery.of(context).size.width * 0.05),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        border: Border.all(width: 1, color: Color(0xffFFFFFF))),
-                    child: TextButton(
-                      onPressed: () async {
-                        final url =
-                            'https://stl-api-staging.herokuapp.com/mock/warehouse/save';
-                        for (var i in listData) {
-                          final response = await http.put(Uri.parse(url),
-                              body: jsonEncode(
-                                {
-                                  "order": snapshot.data!.tempOrder.id,
-                                  "userId": global.userId,
-                                  "productDetails": [i]
-                                },
-                              ),
-                              headers: <String, String>{
-                                'Content-type': 'application/json'
-                              });
-                        }
-                      },
-                      child: Text(
-                        'SAVE',
-                        style: TextStyle(
-                          color: Color(0xffFFFFFF),
-                        ),
+                widget.value == 1
+                    ? Container(
+                        margin: EdgeInsets.only(
+                            top: 15,
+                            bottom: 10,
+                            right: MediaQuery.of(context).size.width * 0.05),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            border:
+                                Border.all(width: 1, color: Color(0xffFFFFFF))),
+                        child: TextButton(
+                          onPressed: () async {
+                            final url =
+                                'https://stl-api-staging.herokuapp.com/mock/warehouse/save';
+                            for (var i in listData) {
+                              final response = await http.put(Uri.parse(url),
+                                  body: jsonEncode(
+                                    {
+                                      "order": snapshot.data!.tempOrder.id,
+                                      "userId": global.userId,
+                                      "productDetails": [i]
+                                    },
+                                  ),
+                                  headers: <String, String>{
+                                    'Content-type': 'application/json'
+                                  });
+                            }
+                          },
+                          child: Text(
+                            'SAVE',
+                            style: TextStyle(
+                              color: Color(0xffFFFFFF),
+                            ),
+                          ),
+                        ))
+                    : SizedBox(
+                        width: 0,
                       ),
-                    ))
               ],
               title: Text(
                 widget.value == 1
@@ -153,7 +159,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                         : 'Double Check',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: widget.value == 1 ? 14.8 : 22,
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w300),
               ),
@@ -325,9 +331,9 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                               ? 'Go to Double Check'
                                               : 'Next',
                                           style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xffFFA000),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color(0xffFFA000),
                                           ),
                                         ),
                                         Icon(

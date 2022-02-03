@@ -20,23 +20,21 @@ class _FirstScreenState extends State<FirstScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-          child: Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(20)
+      child: Center(
+          child: ElevatedButton(
+        style: ElevatedButton.styleFrom(padding: EdgeInsets.all(20)),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DoubleCheck(
+                  updatedValue: upDatedValue,
+                  value: changedData,
                 ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DoubleCheck(
-                          updatedValue: upDatedValue,
-                          value: changedData,
-                        ),
-                      ));
-                  },
-                child: Text('Navigate To Main Screen'),
-              )),
-        ));
+              ));
+        },
+        child: Text('Navigate To Main Screen'),
+      )),
+    ));
   }
 }

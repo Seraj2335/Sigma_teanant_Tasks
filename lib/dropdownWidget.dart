@@ -16,7 +16,6 @@ class DropDownWidget extends StatefulWidget {
 }
 
 class _DropDownWidgetState extends State<DropDownWidget> {
-  int selectedValue = 0;
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
@@ -38,7 +37,11 @@ class _DropDownWidgetState extends State<DropDownWidget> {
       hint: Container(
         margin: EdgeInsets.only(left: 12),
         child: Text(
-          widget.unitAvailable,
+          widget.unitAvailable == "CARTONS"
+              ? 'CTN'
+              : widget.unitAvailable == 'BOXES'
+                  ? 'BXS'
+                  : widget.unitAvailable,
           style: TextStyle(
               fontSize: widget.value == 1 ? 12 : 14,
               fontWeight: FontWeight.w600,

@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class ProductData extends StatefulWidget {
   List<dynamic> cartonId;
   Function upDateArray;
-  final int value;
+  int value;
   bool isChecked;
   bool firstCheck;
   bool loadCheck;
@@ -94,25 +94,25 @@ class _ProductDataState extends State<ProductData>
     super.build(context);
     double size = MediaQuery.of(context).size.width;
     double sizeh = MediaQuery.of(context).size.height;
-    print("Ratio here");
-    print(widget.unit);
+
     return Row(children: [
-      // Container(
-      //   width: size / 18,
-      //   height: sizeh / 18,
-      //   // color: Color(0xffF7A51C),
-      //   color: Colors.white,
-      //   child: Image(image: NetworkImage()),
-      // ),
-      // widget.value == 1
-      //     ? SizedBox(width: size / 20)
-      //     : SizedBox(width: sizeh / 18),
+      Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.05,
+          height: MediaQuery.of(context).size.height * 0.08,
+          // color: Color(0xffF7A51C),
+          color: Colors.white,
+          child: Image(
+              image: NetworkImage(
+                  'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max')),
+        ),
+      ),
+      widget.value == 1 ? SizedBox(width: 0) : SizedBox(width: size / 25),
       Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              // width: 98,
               child: Text(
                 widget.itemName,
                 style: TextStyle(
@@ -122,18 +122,17 @@ class _ProductDataState extends State<ProductData>
                 ),
               ),
             ),
-            Text(
-                widget.itemRef,
+            Text(widget.itemRef,
                 style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                )),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff595454))),
             SizedBox(
               height: 1,
             ),
-            widget.value == 1
+            widget.value == 3
                 ? Text(
-                    widget.ratio.toString() + ' ' + widget.unit + '/CTN',
+                    '3PCS/CTN',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w300,
@@ -143,36 +142,41 @@ class _ProductDataState extends State<ProductData>
                 : SizedBox(
                     height: 0,
                   ),
-            // widget.value == 1
-            //     ? Text(
-            //         widget.cartonId.toString(),
-            //         style: TextStyle(
-            //             color: Colors.black,
-            //             fontSize: 12,
-            //             fontWeight: FontWeight.w300,
-            //         ),
-            //       )
-            //     : Text(widget.cartonId.toString(),
-            //         style: TextStyle(
-            //             color: Color(0xffffaa00),
-            //             fontWeight: FontWeight.w500,
-            //             fontFamily: 'Montserrat')),
+            (widget.value == 2)
+                ? Text(
+                    widget.cartonId.length == 2
+                        ? "Carton #" +
+                            widget.cartonId[0].toString() +
+                            " - " +
+                            widget.cartonId[1].toString()
+                        : "Carton #" + widget.cartonId[0].toString(),
+                    style: TextStyle(
+                      color: Color(0xffFFA000),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  )
+                : Text(widget.cartonId.toString(),
+                    style: TextStyle(
+                        color: Color(0xffffaa00),
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Montserrat')),
           ],
         ),
       ),
       widget.value == 1
           ? SizedBox(
-              width: size / 20,
+              width: 0,
             )
           : SizedBox(
-              width: size / 18,
+              width: size / 25,
             ),
       widget.value == 1
           ? Expanded(
               child: Container(
-                  width: MediaQuery.of(context).size.width * 0.25,
-                  margin: EdgeInsets.only(top: 10),
-                  height: 28,
+                  margin: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.02),
+                  height: MediaQuery.of(context).size.height * 0.03,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       border: Border.all(
@@ -187,11 +191,11 @@ class _ProductDataState extends State<ProductData>
                           value: widget.value))),
             )
           : SizedBox(
-              width: 1,
+              width: 0,
             ),
       widget.value == 1
           ? SizedBox(
-              width: MediaQuery.of(context).size.width / 20,
+              width: 0,
             )
           : SizedBox(
               width: MediaQuery.of(context).size.width / 18,
@@ -209,12 +213,12 @@ class _ProductDataState extends State<ProductData>
                   color: Colors.black),
             ),
             SizedBox(
-              height: 6,
+              height: MediaQuery.of(context).size.height * 0.004,
             ),
             widget.value == 1
                 ? Container(
-                    width: 30,
-                    height: 22,
+                    width: MediaQuery.of(context).size.width * 0.08,
+                    height: MediaQuery.of(context).size.height * 0.03,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         border: Border.all(width: 1, color: Color(0xffA4A4A4))),
@@ -239,7 +243,7 @@ class _ProductDataState extends State<ProductData>
       ),
       widget.value == 1
           ? SizedBox(
-              width: MediaQuery.of(context).size.width / 20,
+              width: 0,
             )
           : SizedBox(
               width: MediaQuery.of(context).size.width / 18,
@@ -250,7 +254,7 @@ class _ProductDataState extends State<ProductData>
             margin: EdgeInsets.only(
               top: widget.value == 1 ? 20 : 0,
             ),
-            width: widget.value == 1 ? 20 : 30,
+            width: widget.value == 1 ? 10 : 30,
             height: widget.value == 1 ? 20 : 30,
             child: csChecked == false
                 ? CircularProgressIndicator()
