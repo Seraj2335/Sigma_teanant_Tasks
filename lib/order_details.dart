@@ -1,21 +1,21 @@
 import 'dart:convert';
-
 import 'package:sigma_task/utils/colors.dart';
-
-import 'global.dart' as global;
 import 'package:flutter/material.dart';
-import 'package:sigma_task/productList.dart';
+
+import 'package:sigma_task/widgets/product_table.dart';
+import '../config/global.dart' as global;
 import 'package:http/http.dart' as http;
 
 class OrderDetails extends StatefulWidget {
   final int value;
   Function getTheList;
-  Function changeCheckValue;
 
   OrderDetails(
-      {required this.value,
-      required this.getTheList,
-      required this.changeCheckValue});
+      {
+        required this.value,
+
+        required this.getTheList,
+      });
 
   @override
   State<OrderDetails> createState() => _OrderDetailsState();
@@ -46,7 +46,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.black38, width: 0.5),
                 borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: ProductList(
+            child: ProductTable(
               getArrayValue: getArrayValue,
               value: widget.value,
             )),
@@ -54,7 +54,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  primary:  CustomColors.DarkOrange,
+                  primary: CustomColors.DarkOrange,
                   padding: EdgeInsets.only(top: 12, bottom: 12)),
               onPressed: () async {
                 setState(() {
@@ -77,15 +77,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                       context: context,
                       builder: (BuildContext context) => Dialog(
                         child: Container(
-                          height: MediaQuery.of(context).size.height*0.10,
+                          height: MediaQuery.of(context).size.height * 0.10,
                           child: Center(
                             child: Text(
                               "Confirmed",
                               style: TextStyle(
                                   color: CustomColors.DarkOrange,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold
-                              ),
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -98,13 +97,14 @@ class _OrderDetailsState extends State<OrderDetails> {
               },
               child: confirmed == false
                   ? CircularProgressIndicator(
-                      color: Color(0xffFFFFFF),
+                      color: Colors.white,
                     )
                   : Text('Confirm',
                       style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xffFFFFFF))),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      )),
             ))
       ],
     );
