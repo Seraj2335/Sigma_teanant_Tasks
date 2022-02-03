@@ -96,17 +96,17 @@ class _ProductDataState extends State<ProductData>
     double sizeh = MediaQuery.of(context).size.height;
 
     return Row(children: [
-      Expanded(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.05,
-          height: MediaQuery.of(context).size.height * 0.08,
-          // color: Color(0xffF7A51C),
-          color: Colors.white,
-          child: Image(
-              image: NetworkImage(
-                  'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max')),
-        ),
-      ),
+      // Expanded(
+      //   child: Container(
+      //     // width: MediaQuery.of(context).size.width * 0.05,
+      //     height: MediaQuery.of(context).size.height * 0.08,
+      //     // color: Color(0xffF7A51C),
+      //     color: Colors.white,
+      //     child: Image(
+      //         image: NetworkImage(
+      //             'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max')),
+      //   ),
+      // ),
       widget.value == 1 ? SizedBox(width: 0) : SizedBox(width: size / 25),
       Expanded(
         child: Column(
