@@ -1,14 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:sigma_task/firstCheck.dart';
 import 'package:sigma_task/first_screen.dart';
 import 'global.dart' as global;
-
-import 'package:sigma_task/warehouse_widget.dart';
-import 'package:sigma_task/screenValue.dart';
-import 'package:sigma_task/sizeConfig.dart';
 
 void main() async {
   runApp(DevicePreview(builder: (context) => MyApp()));
@@ -26,6 +19,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Sigma Tenant',
       theme: ThemeData(
+          fontFamily: 'Montserrat',
           // This is the theme of your application.
           //
           // Try running your application with "flutter run". You'll see the
@@ -35,7 +29,7 @@ class _MyAppState extends State<MyApp> {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          primarySwatch: Colors.amber),
+        primarySwatch: Colors.amber),
       home: FirstScreen(),
     );
   }

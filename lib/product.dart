@@ -23,24 +23,28 @@ class ProductData extends StatefulWidget {
   String unit;
   String orderId;
   String productId;
-  ProductData(
-      {required this.cartonId,
-      required this.upDateArray,
-      required this.productId,
-      required this.orderId,
-      required this.unit,
-      required this.doubleCheck,
-      required this.value,
-      required this.firstCheck,
-      required this.imagePath,
-      required this.isChecked,
-      required this.itemName,
-      required this.itemRef,
-      required this.loadCheck,
-      required this.quantityAvailable,
-      required this.quantityRequired,
-      required this.unitAvailable,
-      required this.unitRequired});
+  int ratio;
+
+  ProductData({
+    required this.cartonId,
+    required this.upDateArray,
+    required this.productId,
+    required this.orderId,
+    required this.unit,
+    required this.doubleCheck,
+    required this.value,
+    required this.firstCheck,
+    required this.imagePath,
+    required this.isChecked,
+    required this.itemName,
+    required this.itemRef,
+    required this.loadCheck,
+    required this.quantityAvailable,
+    required this.quantityRequired,
+    required this.unitAvailable,
+    required this.unitRequired,
+    required this.ratio,
+  });
 
   @override
   State<ProductData> createState() => _ProductDataState();
@@ -90,6 +94,8 @@ class _ProductDataState extends State<ProductData>
     super.build(context);
     double size = MediaQuery.of(context).size.width;
     double sizeh = MediaQuery.of(context).size.height;
+    print("Ratio here");
+    print(widget.unit);
     return Row(children: [
       // Container(
       //   width: size / 18,
@@ -98,56 +104,59 @@ class _ProductDataState extends State<ProductData>
       //   color: Colors.white,
       //   child: Image(image: NetworkImage()),
       // ),
-      widget.value == 1
-          ? SizedBox(width: size / 20)
-          : SizedBox(width: sizeh / 18),
+      // widget.value == 1
+      //     ? SizedBox(width: size / 20)
+      //     : SizedBox(width: sizeh / 18),
       Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 98,
-              child: Text(widget.itemName,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      color: Color(0xff595454),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Montserrat')),
-            ),
-            Text(widget.itemRef,
+              // width: 98,
+              child: Text(
+                widget.itemName,
                 style: TextStyle(
-                    color: Color(0xff595454),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Montserrat')),
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Text(
+                widget.itemRef,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                )),
             SizedBox(
               height: 1,
             ),
-            widget.value == 3
-                ? Text('10 PCS/CTN',
+            widget.value == 1
+                ? Text(
+                    widget.ratio.toString() + ' ' + widget.unit + '/CTN',
                     style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
-                        color: Color(0xff000000),
-                        fontFamily: 'Montserrat'))
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black,
+                    ),
+                  )
                 : SizedBox(
                     height: 0,
                   ),
-            widget.value == 1
-                ? Text(
-                    widget.cartonId.toString(),
-                    style: TextStyle(
-                        color: Color(0xff000000),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
-                        fontFamily: 'Montserrat'),
-                  )
-                : Text(widget.cartonId.toString(),
-                    style: TextStyle(
-                        color: Color(0xffffaa00),
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Montserrat')),
+            // widget.value == 1
+            //     ? Text(
+            //         widget.cartonId.toString(),
+            //         style: TextStyle(
+            //             color: Colors.black,
+            //             fontSize: 12,
+            //             fontWeight: FontWeight.w300,
+            //         ),
+            //       )
+            //     : Text(widget.cartonId.toString(),
+            //         style: TextStyle(
+            //             color: Color(0xffffaa00),
+            //             fontWeight: FontWeight.w500,
+            //             fontFamily: 'Montserrat')),
           ],
         ),
       ),
@@ -160,23 +169,23 @@ class _ProductDataState extends State<ProductData>
             ),
       widget.value == 1
           ? Expanded(
-            child: Container(
-                width: MediaQuery.of(context).size.width * 0.25,
-                margin: EdgeInsets.only(top: 10),
-                height: 28,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(
-                        color: Color(
-                          0xff595454,
-                        ),
-                        width: 1)),
-                child: Center(
-                    child: DropDownWidget(
-                        dropDownCallBack: dropDownCallBackFunction,
-                        unitAvailable: widget.unitAvailable,
-                        value: widget.value))),
-          )
+              child: Container(
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  margin: EdgeInsets.only(top: 10),
+                  height: 28,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      border: Border.all(
+                          color: Color(
+                            0xff595454,
+                          ),
+                          width: 1)),
+                  child: Center(
+                      child: DropDownWidget(
+                          dropDownCallBack: dropDownCallBackFunction,
+                          unitAvailable: widget.unitAvailable,
+                          value: widget.value))),
+            )
           : SizedBox(
               width: 1,
             ),
@@ -191,15 +200,14 @@ class _ProductDataState extends State<ProductData>
       Expanded(
         child: Column(
           children: [
-            Text('Available',
-                style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight:
-                        widget.value == 1 ? FontWeight.w300 : FontWeight.w500,
-                    fontSize: widget.value == 1 ? 11 : 12,
-                    color: widget.value == 1
-                        ? Color(0xff000000)
-                        : Color(0xff595454))),
+            Text(
+              'Available',
+              style: TextStyle(
+                  fontWeight:
+                      widget.value == 1 ? FontWeight.w300 : FontWeight.w500,
+                  fontSize: widget.value == 1 ? 11 : 12,
+                  color: Colors.black),
+            ),
             SizedBox(
               height: 6,
             ),

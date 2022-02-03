@@ -68,7 +68,6 @@ class TempOrder {
   DateTime updatedAt;
   int v;
 
-
   factory TempOrder.fromJson(Map<String, dynamic> json) => TempOrder(
         id: json["_id"],
         isTempStore: json["isTempStore"],
@@ -315,7 +314,6 @@ enum Unit { PCS, SETS, BOXES }
 
 final unitValues =
     EnumValues({"BOXES": Unit.BOXES, "PCS": Unit.PCS, "SETS": Unit.SETS});
-
 enum UnitAvEnum { CARTONS, PCS, BOXES }
 
 final unitAvEnumValues = EnumValues({

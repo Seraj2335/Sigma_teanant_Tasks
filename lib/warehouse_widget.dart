@@ -128,7 +128,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                               body: jsonEncode(
                                 {
                                   "order": snapshot.data!.tempOrder.id,
-                                  "userId": "5fcb6fd3a7000000171",
+                                  "userId": global.userId,
                                   "productDetails": [i]
                                 },
                               ),
@@ -328,7 +328,7 @@ class _DoubleCheckState extends State<DoubleCheck> {
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500,
                                               color: Color(0xffFFA000),
-                                              fontFamily: 'Montserrat'),
+                                          ),
                                         ),
                                         Icon(
                                           Icons.arrow_forward,

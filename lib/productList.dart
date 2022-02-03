@@ -5,12 +5,8 @@ import 'global.dart' as global;
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:sigma_task/firstCheck.dart';
-// import 'package:sigma_task/loadingCheck.dart';
-
-// import 'package:sigma_task/secondCheck.dart';
 import 'package:http/http.dart' as http;
 import 'package:sigma_task/product.dart';
-import 'package:sigma_task/model.dart';
 import 'package:sigma_task/model.dart';
 
 class ProductList extends StatefulWidget {
@@ -92,8 +88,7 @@ class _ProductListState extends State<ProductList> {
                                     .productDetails[index].product.id,
                                 orderId: snapshot.data!.tempOrder.id,
                                 unit: snapshot.data!.tempOrder
-                                    .productDetails[index].product.unit
-                                    .toString(),
+                                    .productDetails[index].product.unit.toString(),
                                 doubleCheck: snapshot.data!.tempOrder
                                     .productDetails[index].doubleCheck,
                                 value: widget.value,
@@ -116,6 +111,8 @@ class _ProductListState extends State<ProductList> {
                                 unitAvailable: EnumToString.convertToString(
                                     snapshot.data!.tempOrder
                                         .productDetails[index].unitAv),
+                                ratio: snapshot.data!.tempOrder
+                                    .productDetails[index].product.ratio,
                                 unitRequired: EnumToString.convertToString(
                                     snapshot.data!.tempOrder
                                         .productDetails[index].unitReq)),
